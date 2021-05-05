@@ -1,0 +1,42 @@
+@import '../../styles/vars'
+
+.Auth
+	display: flex
+	align-items: center
+	.container
+		max-width: 700px
+		padding: 80px 0
+
+	&__info
+		margin-top: 50px
+
+		li
+			font: 18px/30px $regular
+			&:first-child
+				font: 18px/30px $bold
+
+	&__form
+		form
+			display: flex
+			flex-wrap: wrap
+			margin: 30px -10px 0
+
+			.Input
+				width: calc(50% - 20px)
+				margin: 0 10px 20px
+
+			.Button
+				// margin-top: 20px
+				margin-left: 10px
+
+
+@media only screen and ( max-width:  700px)
+	.Auth
+		&__info
+			li
+				font: 14px/24px $regular
+
+		&__form
+			.Input
+				// margin: 0 10px 0 
+				width: calc(100% - 20px) !important

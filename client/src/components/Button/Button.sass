@@ -1,0 +1,115 @@
+@import '../../styles/vars'
+
+.Button
+	$self: &
+	position: relative
+	display: inline-block
+	padding: 12px 30px 13px
+	box-sizing: border-box
+	border-radius: 4px
+	outline: none
+	border: none
+	font: 18px $regular
+	cursor: pointer
+	color: $black
+	background: none
+	transition: color .2s, background-color .2s
+	z-index: 1
+
+	&::before
+		content: ''
+		position: absolute
+		width: 100%
+		height: 100%
+		top: 0
+		left: 0
+		border-radius: 4px
+		background-color: rgba(237, 243, 251, .4)
+		z-index: -1
+		transition: color .2s, background-color .2s, box-shadow .2s
+
+	&:active
+		&::before
+			transform: scale(0.97)
+
+	&:hover
+		color: white
+		&::before
+			background-color: $orange1
+
+
+	&__icon
+		display: flex
+		svg
+			// height: 24px
+			width: auto
+
+	&--icon
+		display: flex
+		align-items: center
+		justify-content: center
+		padding: 0
+		background: none
+		outline: none
+		cursor: pointer
+		transition: border .2s
+
+		&::before
+			display: none
+
+		&:hover
+			svg
+				fill: $orange1
+
+		svg
+			fill: $black
+			transition: fill .2s
+
+
+
+	&--active
+		#{$self}__icon
+			svg
+				fill: $orange1
+
+	&--disabled
+		pointer-events: none
+		user-select: none
+		&::before
+			background-color: $gray !important
+
+		svg
+			fill: $gray !important
+
+
+
+
+	&--gray
+		color: white
+		&::before
+			background-color: $gray
+		&:hover, &.Button--active
+			&::before
+				background-color: $orange1
+
+	&--red
+		color: white
+		&::before
+			background-color: $orange1
+		&:hover, &.Button--active
+			&::before
+				background-color: $orange1
+
+	&--blue
+		color: white
+		&::before
+			background-color: $orange1
+		&:hover, &.Button--active
+			&::before
+				background-color: $orange1
+	
+	
+.Button.Button--disabled.Button--icon
+	background-color: transparent !important
+	
+	

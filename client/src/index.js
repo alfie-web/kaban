@@ -3,8 +3,12 @@ import ReactDOM from 'react-dom'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import reportWebVitals from './reportWebVitals'
+
 import store from './store/store'
+
+import './styles/fonts.sass'
 import './styles/main.sass'
+
 import App from './App'
 
 ReactDOM.render(
