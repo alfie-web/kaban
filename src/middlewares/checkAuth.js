@@ -3,7 +3,9 @@ const jwt = require('jsonwebtoken')
 const secret = process.env.SECRET
 
 module.exports = (req, res, next) => {
-   if (req.path === '/api/users/login' || !req.xhr) return next()
+   console.log('middleware')
+   // if (req.path === '/api/users/login' || !req.xhr) return next()
+   if (req.path === '/api/users/login') return next()
 
    const token = req.headers.token
 
@@ -23,6 +25,8 @@ module.exports = (req, res, next) => {
             message: 'Invalid token!',
          })
       }
+
+      console.log('payload.user', payload.user)
 
       req.user = payload.user
       next()

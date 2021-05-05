@@ -6,6 +6,7 @@ const morgan = require('morgan')
 const path = require('path')
 
 const userRoutes = require('./users')
+const boardsRoutes = require('./boards')
 
 const errorsHandler = require('../middlewares/errorsHandler')
 
@@ -28,6 +29,7 @@ module.exports = function createRoutes(app) {
    app.use(morgan('dev'))
 
    app.use('/api/users', userRoutes)
+   app.use('/api/boards', boardsRoutes)
 
    if (process.env.NODE_ENV === 'production') {
       app.use(

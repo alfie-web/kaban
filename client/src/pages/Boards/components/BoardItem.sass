@@ -1,0 +1,61 @@
+@import '../../../styles/vars'
+	
+.BoardsPage__item
+	$boardItem: &
+	position: relative
+	overflow: hidden
+	display: flex
+	justify-content: center
+	align-items: center
+	width: calc(25% - 20px)
+	height: 200px
+	margin: 0 10px 30px
+	border-radius: 10px
+	cursor: pointer
+	background-color: rgba(255, 255, 255, .05)
+	text-align: center
+	transition: box-shadow .3s
+	text-decoration: none
+
+	&:hover
+		box-shadow: $shadow
+
+		#{$boardItem}-bg
+			transform: scale(1)
+
+	&-title
+		z-index: 100
+		color: white
+		font-size: 18px
+		font-weight: bold
+		
+	
+
+	&-bg
+		position: absolute
+		top: 0
+		bottom: 0
+		left: 0
+		right: 0
+		z-index: 20
+		user-select: none
+		pointer-events: none
+		transform: scale(1.2)
+		transition: transform .3s
+
+		&::after
+			content: ''
+			position: absolute
+			top: 0
+			bottom: 0
+			left: 0
+			right: 0
+			background-color: rgba(32, 33, 36, .7)
+			z-index: 30
+
+		img
+			user-select: none
+			pointer-events: none
+			width: 100%
+			height: 100%
+			object-fit: cover

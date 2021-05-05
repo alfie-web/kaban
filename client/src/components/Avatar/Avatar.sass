@@ -1,0 +1,35 @@
+@import '../../styles/vars'
+
+.Avatar
+	width: 35px
+	min-width: 35px
+	height: 35px
+	border-radius: 50%
+	overflow: hidden
+
+	img
+		object-fit: cover
+		height: 100%
+		width: 100%
+
+	&__gradient
+		position: relative
+		display: flex
+		justify-content: center
+		align-items: center
+
+		span
+			pointer-events: none
+			user-select: none
+			font: 16px $regular
+			text-transform: uppercase
+			transform: translateY(5%)
+
+	img, &__gradient
+		height: 100%
+		width: 100%
+
+	&-min
+		width: 27px
+		min-width: 27px
+		height: 27px

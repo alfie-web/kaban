@@ -8,7 +8,8 @@ const schema = new Schema(
          required: true,
       },
 		avatar: {
-			type: String
+			type: String,
+         default: null
 		},
       email: {
          type: String,

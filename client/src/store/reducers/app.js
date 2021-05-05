@@ -28,10 +28,9 @@ export const init = () => async (dispatch) => {
 
    const authPromise = dispatch(getMe())
 
-   Promise.all([authPromise])
-      .finally(
-         dispatch(setInitialized())
-      )
+   await Promise.all([authPromise])
+
+   dispatch(setInitialized())
 }
 
 export default appSlice.reducer

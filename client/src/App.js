@@ -3,11 +3,14 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { init } from './store/reducers/app'
+
 import AuthPage from './pages/Auth'
+import BoardsPage from './pages/Boards'
+import Header from './components/Header'
 
 const ROUTES = [
    { path: '/', component: AuthPage, auth: 'all' },
-   { path: '/boards', component: () => <div>Boards</div>, auth: true },
+   { path: '/boards', component: BoardsPage, auth: true },
    // { path: ['/canvas', '/canvas/:id'], component: CanvasPage, auth: true },
 ]
 
@@ -43,7 +46,7 @@ const App = () => {
    if (!initialized) return <div>Loading...</div>
 
    return <div className="App">
-      Kaban
+      <Header />
 
       {createRoutes(isAuth)}
 
