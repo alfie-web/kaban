@@ -23,6 +23,13 @@ const Board = () => {
 	}, [id, dispatch])
 
    // useEffect(() => {
+   //    document.documentElement.style.overflowY = 'hidden'
+   //    return () => {
+   //       document.documentElement.style.overflowY = 'auto'
+   //    }
+   // })
+
+   // useEffect(() => {
    //    return () => {
    //       dispatch(setLists([]))
    //    }

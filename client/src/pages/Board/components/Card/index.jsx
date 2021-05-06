@@ -60,7 +60,7 @@ function Card({
                      {title}
                   </div>
                )}
-               {editMode && (
+               {/* {editMode && (
                   <div className="Card__edit" ref={editBlock}>
                      <div
                         className="Card__btn"
@@ -95,9 +95,9 @@ function Card({
                         </svg>
                      </div>
                   </div>
-               )}
+               )} */}
 
-               {isEditing && (
+               {/* {isEditing && (
                   <textarea
                      type="text"
                      className="Card__textarea"
@@ -106,7 +106,7 @@ function Card({
                      onChange={(e) => setNewCardText(e.target.value)}
                      // onBlur={onEndEditing}
                   ></textarea>
-               )}
+               )} */}
             </div>
          )}
       </Draggable>

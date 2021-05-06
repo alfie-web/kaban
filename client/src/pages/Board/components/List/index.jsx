@@ -92,6 +92,7 @@ function List({
                      <AddForm
                         callback={onAddCardHandler.bind(null, _id)}
                         placeholder="Текст карточки"
+                        className="List__addCardForm"
                      />
                   )}
                   {!newCardMode && (

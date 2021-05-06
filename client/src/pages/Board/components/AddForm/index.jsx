@@ -6,11 +6,6 @@ import './AddForm.sass'
 export default function AddForm({ callback, className, placeholder }) {
    const [text, setText] = useState('')
 
-   // Он конечно универсальный, но здесь не нужен
-   // const inputChangeHandler = e => {
-   // 	this.setState({ [e.target.name]: e.target.value });
-   // };
-
    const inputChangeHandler = (e) => {
       setText(e.target.value)
    }
