@@ -7,6 +7,8 @@ const path = require('path')
 
 const userRoutes = require('./users')
 const boardsRoutes = require('./boards')
+const listsRoutes = require('./lists')
+const cardsRoutes = require('./cards')
 
 const errorsHandler = require('../middlewares/errorsHandler')
 
@@ -30,6 +32,15 @@ module.exports = function createRoutes(app) {
 
    app.use('/api/users', userRoutes)
    app.use('/api/boards', boardsRoutes)
+   app.use('/api/lists', listsRoutes)
+   app.use('/api/cards', cardsRoutes)
+
+   // app.all('*', (req, res) => {
+	// 	res.status(404).json({
+	// 		status: 'error',
+	// 		message: 'Missing endpoint'
+	// 	})
+	// })
 
    if (process.env.NODE_ENV === 'production') {
       app.use(

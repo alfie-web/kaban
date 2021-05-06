@@ -22,8 +22,9 @@ module.exports = class Boards {
 
    getById = (req, res) => {
       const boardId = req.params.id
+      const userId = req.user._id
 
-      BoardModel.findOne({ _id: boardId })
+      BoardModel.findOne({ _id: boardId, users: userId })
          .select('-lists')
          .exec()
          .then((board) => {
@@ -42,7 +43,6 @@ module.exports = class Boards {
    }
 
    create = (req, res) => {
-		// console.log('req.user', req.user)
       const userId = req.user._id
       const postData = {
          title: req.body.title,

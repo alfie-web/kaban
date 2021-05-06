@@ -6,12 +6,13 @@ import { init } from './store/reducers/app'
 
 import AuthPage from './pages/Auth'
 import BoardsPage from './pages/Boards'
+import BoardPage from './pages/Board'
 import Header from './components/Header'
 
 const ROUTES = [
    { path: '/', component: AuthPage, auth: 'all' },
    { path: '/boards', component: BoardsPage, auth: true },
-   // { path: ['/canvas', '/canvas/:id'], component: CanvasPage, auth: true },
+   { path: '/boards/:id', component: BoardPage, auth: true },
 ]
 
 function createRoutes(isAuth) {
