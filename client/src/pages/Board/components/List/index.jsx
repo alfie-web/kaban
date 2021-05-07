@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useState, useEffect, useRef, memo } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import clsx from 'clsx'
 import { Droppable, Draggable } from 'react-beautiful-dnd'
+
+import { fetchCards, createCard } from '../../../../store/reducers/lists'
+import useLazyLoading from '../../../../helpers/useLazyLoading'
 
 import Card from '../Card'
 import AddForm from '../AddForm'
@@ -11,18 +14,28 @@ function List({
    list,
    className,
    index,
-   createCard,
-   editCard,
-   deleteCard,
-   getAllCards,
+   // createCard,
+   // editCard,
+   // deleteCard,
+   // getAllCards,
 }) {
    const dispatch = useDispatch()
    const { _id, title, cardItems } = list
    const [newCardMode, setNewCardMode] = useState(false)
+   // const isCardsFetching = useSelector(state => state.lists.isCardsFetching)
+   const lazyRef = useRef(null)
 
-   useEffect(() => {
-      dispatch(getAllCards(_id))
-   }, [dispatch, getAllCards, _id])
+   console.log('RENDERS', _id)
+
+   // console.log(isCardsFetching)
+   // useEffect(() => {
+   //    // dispatch(getAllCards(_id))
+   //    dispatch(fetchCards(_id))
+   // }, [dispatch, _id])
+
+   useLazyLoading(lazyRef, () => dispatch(fetchCards(_id)))
+   // useLazyLoading(lazyRef, () => dispatch(fetchCards(_id)), isCardsFetching)
+   // useLazyLoading(lazyRef, () => {}, isCardsFetching)
 
    const onAddCardHandler = (listId, text) => {
       setNewCardMode(false)
@@ -84,6 +97,8 @@ function List({
                               })
                               : null}
                            {provided.placeholder}
+
+                           <div className="Lazy" ref={lazyRef}></div>
                         </div>
                      )}
                   </Droppable>
@@ -111,7 +126,7 @@ function List({
    )
 }
 
-export default List
+export default memo(List)
 
 
 

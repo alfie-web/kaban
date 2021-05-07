@@ -7,7 +7,8 @@ export const listsSlice = createSlice({
    name: 'lists',
    initialState: {
       items: [],
-		isFetching: false
+		isFetching: false,
+		isCardsFetching: null
    },
    reducers: {
 		setLists: (state, { payload }) => {
@@ -15,7 +16,16 @@ export const listsSlice = createSlice({
       },
 		setCards: (state, { payload }) => {
 			const findedList = state.items.find(item => item._id === payload.listId)
-			findedList.cardItems = payload.cardItems
+			if (findedList.cardItems) {
+				console.log('payload.cardItems', payload.cardItems)
+				// findedList.cardItems.concat(payload.cardItems)
+				findedList.cardItems.push(...payload.cardItems)
+			} else {
+				findedList.cardItems = payload.cardItems
+			}
+
+			findedList.isLastPage = payload.isLastPage
+			findedList.page = payload.page
       },
 		setNewList: (state, { payload }) => {
          state.items.push(payload)
@@ -51,10 +61,22 @@ export const listsSlice = createSlice({
 		setIsFetching: (state, { payload }) => {
          state.isFetching = payload
       },
+		setIsCardsFetching: (state, { payload }) => {
+         state.isCardsFetching = payload
+      },
    },
 })
 
-export const { setLists, setCards, setNewList, setNewCard, setMoveCard, setMoveList, setIsFetching } = listsSlice.actions
+export const {
+   setLists,
+   setCards,
+   setNewList,
+   setNewCard,
+   setMoveCard,
+   setMoveList,
+   setIsFetching,
+   setIsCardsFetching,
+} = listsSlice.actions
 
 export const fetchLists = (boardId) => async (dispatch) => {
 	dispatch(setIsFetching(true))
@@ -70,17 +92,59 @@ export const fetchLists = (boardId) => async (dispatch) => {
 	}
 }
 
-export const fetchCards = (listId) => async (dispatch) => {
+
+export const fetchCards = (listId) => async (dispatch, getState) => {
+	const { lists } = getState()
+	if (lists.isCardsFetching === listId) return
+
+	dispatch(setIsCardsFetching(listId))
+	let page = 1
+
+	const findedList = lists.items.find(l => l._id === listId)
+
+	if (findedList) {
+		page = findedList.page
+		if (findedList.isLastPage) return
+		page = findedList.page + 1
+	}
+
+	console.log(page)
+	if (!page) page = 1
+
    try {
-      const { data } = await cardsAPI.getAll(listId)
+      const { data } = await cardsAPI.getAll(listId, page)
+		
 		dispatch(setCards({
 			listId,
-			cardItems: data.data
+			cardItems: data.data.cards,
+			isLastPage: data.data.isLastPage,
+			page: data.data.page
 		}))
    } catch (error) {
 
+	} finally {
+		dispatch(setIsCardsFetching(null))
 	}
 }
+
+// export const fetchCards = (listId) => async (dispatch) => {
+// 	dispatch(setIsCardsFetching(true))
+//    try {
+//       const { data } = await cardsAPI.getAll(listId)
+// 		console.log('DATA', data)
+// 		dispatch(setCards({
+// 			listId,
+// 			// cardItems: data.data,
+// 			cardItems: data.data.cards,
+// 			isLastPage: data.data.isLastPage
+				// page: data.data.page
+// 		}))
+//    } catch (error) {
+
+// 	} finally {
+// 		dispatch(setIsCardsFetching(false))
+// 	}
+// }
 
 export const createList = (boardId, title) => async (dispatch) => {
    try {

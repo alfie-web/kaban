@@ -1,48 +1,71 @@
 const BoardModel = require('../models/Board')
 const ListModel = require('../models/List')
 const CardModel = require('../models/Card')
-
+// Model.paginate({}, { offset: 30, limit: 10 }).then(function (result) {
+//    // ...
+//  });
 module.exports = class List {
-   getAll = (req, res) => {
+   // getAll = async (req, res) => {
+   //    const { boardId } = req.params
+
+   //    try {
+   //       const board = await BoardModel.findOne({ _id: boardId })
+   //       // const lists = await ListModel.find({ boardId }).select('-cards')
+   //       const lists = await ListModel.paginate({ boardId }, {
+   //          select: '-cards',
+   //          limit: 2,
+   //          offset: 0
+   //       })
+
+   //       console.log('LISTS', lists)
+
+   //       // Приходится сортировать, ибо падла не соблюдает порядок
+   //       // (эта штука сортирует массив в соответствии с другим такимже массивом)
+   //       const sortedLists = lists.sort(function (a, b) {
+   //          return (
+   //             board.lists.indexOf(a._id) - board.lists.indexOf(b._id)
+   //          )
+   //       })
+
+   //       res.json({
+   //          status: 'success',
+   //          data: sortedLists,
+   //       })
+
+   //    } catch (e) {
+   //       res.status(400).json({
+   //          status: 'error',
+   //          e,
+   //       })
+   //    }
+   // }
+
+   getAll = async (req, res) => {
       const { boardId } = req.params
 
-      BoardModel.findOne({ _id: boardId })
-         .exec()
-         .then((board) => {
-            if (!board) return
+      try {
+         const board = await BoardModel.findOne({ _id: boardId })
+         const lists = await ListModel.find({ boardId }).select('-cards')
 
-            // ListModel.find({ _id: { $in: board.lists } })
-            ListModel.find({ boardId })
-               // .populate('cards')
-               .select('-cards')
-               .exec()
-               .then((lists) => {
-                  // Приходится сортировать, ибо падла не соблюдает порядок
-                  // (эта штука сортирует массив в соответствии с другим такимже массивом)
-                  const sortedLists = lists.sort(function (a, b) {
-                     return (
-                        board.lists.indexOf(a._id) - board.lists.indexOf(b._id)
-                     )
-                  })
-
-                  res.json({
-                     status: 'success',
-                     data: sortedLists,
-                  })
-               })
-               .catch((err) =>
-                  res.status(400).json({
-                     status: 'error',
-                     err,
-                  })
-               )
+         // Приходится сортировать, ибо падла не соблюдает порядок
+         // (эта штука сортирует массив в соответствии с другим такимже массивом)
+         const sortedLists = lists.sort(function (a, b) {
+            return (
+               board.lists.indexOf(a._id) - board.lists.indexOf(b._id)
+            )
          })
-         .catch((err) =>
-            res.status(404).json({
-               status: 'error',
-               err,
-            })
-         )
+
+         res.json({
+            status: 'success',
+            data: sortedLists,
+         })
+
+      } catch (e) {
+         res.status(400).json({
+            status: 'error',
+            e,
+         })
+      }
    }
 
    create = (req, res) => {

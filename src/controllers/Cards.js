@@ -2,40 +2,68 @@ const ListModel = require('../models/List')
 const CardModel = require('../models/Card')
 
 module.exports = class Card {
-   getAllByListId = (req, res) => {
-      ListModel.findOne({ _id: req.params.listId })
-         .exec()
-         .then((list) => {
-            if (!list) return
+   getAllByListId = async (req, res) => {
+      const page = req.query.page || 1
+      try {
+         const list = await ListModel.findOne({ _id: req.params.listId })
+         // const cards = await CardModel.find({ listId: req.params.listId })
 
-            CardModel.find({ listId: req.params.listId })
-               .exec()
-               .then((cards) => {
-                  const sortedCards = cards.sort(function (a, b) {
-                     return (
-                        list.cards.indexOf(a._id) - list.cards.indexOf(b._id)
-                     )
-                  })
-
-                  res.json({
-                     status: 'success',
-                     data: sortedCards,
-                  })
-               })
-               .catch((err) =>
-                  res.status(400).json({
-                     status: 'error',
-                     err,
-                  })
-               )
+         const cards = await CardModel.paginate({ listId: req.params.listId }, {
+            limit: 2,
+            // offset: 0
+            page
          })
-         .catch((err) =>
-            res.status(400).json({
-               status: 'error',
-               err,
-            })
-         )
+
+         console.log('CARDS', cards)
+
+         const sortedCards = cards.docs.sort(function (a, b) {
+            return (
+               list.cards.indexOf(a._id) - list.cards.indexOf(b._id)
+            )
+         })
+
+         res.json({
+            status: 'success',
+            // data: sortedCards
+            data: {
+               cards: sortedCards,
+               isLastPage: !cards.hasNextPage,
+               page: cards.page
+            },
+         })
+
+      } catch (error) {
+         res.status(400).json({
+            status: 'error',
+            err,
+         })
+      }
    }
+
+
+   // getAllByListId = async (req, res) => {
+   //    try {
+   //       const list = await ListModel.findOne({ _id: req.params.listId })
+   //       const cards = await CardModel.find({ listId: req.params.listId })
+
+   //       const sortedCards = cards.sort(function (a, b) {
+   //          return (
+   //             list.cards.indexOf(a._id) - list.cards.indexOf(b._id)
+   //          )
+   //       })
+
+   //       res.json({
+   //          status: 'success',
+   //          data: sortedCards,
+   //       })
+
+   //    } catch (error) {
+   //       res.status(400).json({
+   //          status: 'error',
+   //          err,
+   //       })
+   //    }
+   // }
 
    create = (req, res) => {
       const postData = {

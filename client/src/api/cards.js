@@ -1,7 +1,7 @@
 import api from './'
 
 const cardsAPI = {
-   getAll: (listId) => api.get(`/cards/${listId}`),
+   getAll: (listId, page) => api.get(`/cards/${listId}?page=${page}`),
    createCard: ({ listId, title }) =>
       api.post('/cards/create', { listId, title }),
    // editCard: ({ cardId, text }) =>

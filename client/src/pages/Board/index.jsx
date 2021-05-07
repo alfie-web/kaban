@@ -114,8 +114,8 @@ const Board = () => {
                                          index={index}
                                          className="BoardPage__list"
                                          list={list}
-                                         getAllCards={fetchCards}
-                                         createCard={createCard}
+                                       //   getAllCards={fetchCards}
+                                       //   createCard={createCard}
                                        //   editCard={editCard}
                                        //   deleteCard={deleteCard}
                                       />
