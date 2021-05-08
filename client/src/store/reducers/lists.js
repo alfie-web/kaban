@@ -8,7 +8,7 @@ export const listsSlice = createSlice({
    initialState: {
       items: [],
 		isFetching: false,
-		isCardsFetching: null
+		isCardsFetching: null	// TODO: Сделать в виде массива
    },
    reducers: {
 		setLists: (state, { payload }) => {
@@ -108,17 +108,16 @@ export const fetchCards = (listId) => async (dispatch, getState) => {
 		page = findedList.page + 1
 	}
 
-	console.log(page)
 	if (!page) page = 1
 
    try {
-      const { data } = await cardsAPI.getAll(listId, page)
+      const { data } = await listsAPI.getCards(listId, page)
 		
 		dispatch(setCards({
 			listId,
 			cardItems: data.data.cards,
 			isLastPage: data.data.isLastPage,
-			page: data.data.page
+			page: +data.data.page
 		}))
    } catch (error) {
 
@@ -126,25 +125,6 @@ export const fetchCards = (listId) => async (dispatch, getState) => {
 		dispatch(setIsCardsFetching(null))
 	}
 }
-
-// export const fetchCards = (listId) => async (dispatch) => {
-// 	dispatch(setIsCardsFetching(true))
-//    try {
-//       const { data } = await cardsAPI.getAll(listId)
-// 		console.log('DATA', data)
-// 		dispatch(setCards({
-// 			listId,
-// 			// cardItems: data.data,
-// 			cardItems: data.data.cards,
-// 			isLastPage: data.data.isLastPage
-				// page: data.data.page
-// 		}))
-//    } catch (error) {
-
-// 	} finally {
-// 		dispatch(setIsCardsFetching(false))
-// 	}
-// }
 
 export const createList = (boardId, title) => async (dispatch) => {
    try {
@@ -155,9 +135,14 @@ export const createList = (boardId, title) => async (dispatch) => {
 	}
 }
 
-export const createCard = (listId, title) => async (dispatch) => {
-   try {
-      const { data } = await cardsAPI.createCard({ listId, title })
+export const createCard = (listId, title) => async (dispatch, getState) => {
+	const { lists } = getState()
+	const finded = lists.items.find(l => l._id === listId)
+
+	console.log('finded', finded)
+
+	try {
+      const { data } = await cardsAPI.createCard({ listId, title, position: finded.cardItems.length })
 		dispatch(setNewCard(data.data))
    } catch (error) {
 

@@ -1,9 +1,7 @@
 const BoardModel = require('../models/Board')
 const ListModel = require('../models/List')
 const CardModel = require('../models/Card')
-// Model.paginate({}, { offset: 30, limit: 10 }).then(function (result) {
-//    // ...
-//  });
+
 module.exports = class List {
    // getAll = async (req, res) => {
    //    const { boardId } = req.params
@@ -64,6 +62,39 @@ module.exports = class List {
          res.status(400).json({
             status: 'error',
             e,
+         })
+      }
+   }
+
+   getCards = async (req, res) => {
+      const listId = req.params.id
+      const page = req.query.page || 1
+
+      const limit = 2
+      const offset = (page - 1) * limit
+
+      try {
+         const cardsCount = await CardModel.countDocuments({ listId })
+         const isLastPage = page >= Math.ceil(cardsCount / limit)
+         
+
+         const list = await ListModel.findById(listId)
+            .select({'cards': { '$slice': [offset, limit] }})
+            .populate('cards')
+
+         res.json({
+            status: 'success',
+            data: {
+               cards: list.cards,
+               isLastPage,
+               page
+            }
+         })
+         
+      } catch (error) {
+         res.status(400).json({
+            status: 'error',
+            message: error,
          })
       }
    }

@@ -135,7 +135,7 @@ const Board = () => {
                                  <div className="BoardPage__addList">
                                     <AddForm
                                        callback={onAddListHandler}
-                                       placeholder="Заголовок листа"
+                                       placeholder="Название листа"
                                     />
                                  </div>
                               )}

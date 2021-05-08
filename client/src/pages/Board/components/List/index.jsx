@@ -106,7 +106,7 @@ function List({
                   {newCardMode && (
                      <AddForm
                         callback={onAddCardHandler.bind(null, _id)}
-                        placeholder="Текст карточки"
+                        placeholder="Название карточки"
                         className="List__addCardForm"
                      />
                   )}
