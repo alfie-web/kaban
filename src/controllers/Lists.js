@@ -68,15 +68,15 @@ module.exports = class List {
 
    getCards = async (req, res) => {
       const listId = req.params.id
-      const page = req.query.page || 1
 
       const limit = 2
-      const offset = (page - 1) * limit
+      const offset = +req.query.offset || 0
+
+      console.log('offset', offset)
 
       try {
          const cardsCount = await CardModel.countDocuments({ listId })
-         const isLastPage = page >= Math.ceil(cardsCount / limit)
-         
+         let isLastPage = offset + limit >= cardsCount
 
          const list = await ListModel.findById(listId)
             .select({'cards': { '$slice': [offset, limit] }})
@@ -87,7 +87,6 @@ module.exports = class List {
             data: {
                cards: list.cards,
                isLastPage,
-               page
             }
          })
          

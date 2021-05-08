@@ -17,15 +17,12 @@ export const listsSlice = createSlice({
 		setCards: (state, { payload }) => {
 			const findedList = state.items.find(item => item._id === payload.listId)
 			if (findedList.cardItems) {
-				console.log('payload.cardItems', payload.cardItems)
-				// findedList.cardItems.concat(payload.cardItems)
 				findedList.cardItems.push(...payload.cardItems)
 			} else {
 				findedList.cardItems = payload.cardItems
 			}
 
 			findedList.isLastPage = payload.isLastPage
-			findedList.page = payload.page
       },
 		setNewList: (state, { payload }) => {
          state.items.push(payload)
@@ -93,31 +90,26 @@ export const fetchLists = (boardId) => async (dispatch) => {
 }
 
 
-export const fetchCards = (listId) => async (dispatch, getState) => {
+export const fetchCards = (listId) => async (dispatch, getState) => {	
 	const { lists } = getState()
 	if (lists.isCardsFetching === listId) return
-
-	dispatch(setIsCardsFetching(listId))
-	let page = 1
-
+	
+	// dispatch(setIsCardsFetching(listId))
+	
 	const findedList = lists.items.find(l => l._id === listId)
+	
+	if (findedList?.isLastPage) return
+	dispatch(setIsCardsFetching(listId))
 
-	if (findedList) {
-		page = findedList.page
-		if (findedList.isLastPage) return
-		page = findedList.page + 1
-	}
-
-	if (!page) page = 1
+	const offset = findedList.cardItems ? findedList.cardItems.length : 0
 
    try {
-      const { data } = await listsAPI.getCards(listId, page)
+      const { data } = await listsAPI.getCards(listId, offset)
 		
 		dispatch(setCards({
 			listId,
 			cardItems: data.data.cards,
 			isLastPage: data.data.isLastPage,
-			page: +data.data.page
 		}))
    } catch (error) {
 
