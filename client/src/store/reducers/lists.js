@@ -8,7 +8,8 @@ export const listsSlice = createSlice({
    initialState: {
       items: [],
 		isFetching: false,
-		isCardsFetching: null	// TODO: Сделать в виде массива
+		isCardsFetching: null,	// TODO: Сделать в виде массива
+		editedCard: null
    },
    reducers: {
 		setLists: (state, { payload }) => {
@@ -24,6 +25,19 @@ export const listsSlice = createSlice({
 
 			findedList.isLastPage = payload.isLastPage
       },
+
+		setEditedCard: (state, { payload }) => {
+			if (!payload) {
+				state.editedCard = null
+			} else {
+				const list = state.items.find(l => l._id === payload.listId)
+	
+				if (list) {
+					state.editedCard = list.cardItems.find(c => c._id === payload.cardId)
+				}
+			}
+      },
+
 		setNewList: (state, { payload }) => {
          state.items.push(payload)
       },
@@ -73,6 +87,7 @@ export const {
    setMoveList,
    setIsFetching,
    setIsCardsFetching,
+	setEditedCard
 } = listsSlice.actions
 
 export const fetchLists = (boardId) => async (dispatch) => {

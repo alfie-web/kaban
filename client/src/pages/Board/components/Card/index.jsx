@@ -11,6 +11,7 @@ function Card({
    card,
    className,
    index,
+   listId
    // onEditCardHandler,
    // onDeleteCardHandler,
 }) {
@@ -51,6 +52,8 @@ function Card({
                   'Card--editMode': editMode,
                   // 'Card--editing': isEditing,
                })}
+               data-id={_id}
+               data-listid={listId}
                // onDoubleClick={ () => !isEditing && setEditMode(true) }
             >
                {marks && marks.length ? (

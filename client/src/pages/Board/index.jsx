@@ -4,11 +4,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 
 import { fetchBoardById, moveList } from '../../store/reducers/boards'
-import { createList, moveCard } from '../../store/reducers/lists'
+import { createList, moveCard, setEditedCard } from '../../store/reducers/lists'
 
-import Modal from '../../components/Modal'
+// import Modal from '../../components/Modal'
 import List from './components/List'
 import AddForm from './components/AddForm'
+import EditModal from './components/EditModal'
 import './Board.sass'
 
 const Board = () => {
@@ -16,9 +17,11 @@ const Board = () => {
 	const dispatch = useDispatch()
 	const listsRef = useRef(null)
 	const [newListMode, setNewListMode] = useState(false)
-   const [modalVisible, setModalVisible] = useState(false)
+   // const [modalVisible, setModalVisible] = useState(false)
 	const { currentBoard } = useSelector(state => state.boards)
 	const { items } = useSelector(state => state.lists)
+
+   // console.log('RENDERS')
 
 	useEffect(() => {
 		id && dispatch(fetchBoardById(id))
@@ -73,6 +76,16 @@ const Board = () => {
       }
    }
 
+   const cardClickHandler = e => {  
+      const card = e.target.closest('.Card')
+      if (!card) return
+
+      dispatch(setEditedCard({
+         listId: card.dataset.listid,
+         cardId: card.dataset.id
+      }))
+   }
+
 	return (
       <>
          <div className="BoardPage__bg">
@@ -84,7 +97,7 @@ const Board = () => {
             
             <div className="BoardPage__container">
                <DragDropContext onDragEnd={onDragEnd}>
-                  <div className="BoardPage__lists" ref={listsRef}>
+                  <div className="BoardPage__lists" ref={listsRef} onDoubleClick={cardClickHandler}>
                      <Droppable
                         droppableId="all-lists"
                         direction="horizontal"
@@ -131,12 +144,14 @@ const Board = () => {
                </DragDropContext>
             </div>
 
-            {modalVisible && <Modal 
+            <EditModal />
+
+            {/* {modalVisible && <Modal 
                isVisible={modalVisible}
                onClose={() => setModalVisible(false)}
             >
                Modal content
-            </Modal>}
+            </Modal>} */}
          </main>
       </>
    )
