@@ -80,7 +80,16 @@ module.exports = class List {
 
          const list = await ListModel.findById(listId)
             .select({'cards': { '$slice': [offset, limit] }})
-            .populate('cards')
+            // .populate('cards')
+            // .populate('cards.responsibleUsers')
+            .populate({ 
+               path: 'cards',
+               populate: {
+                 path: 'responsibleUsers',
+                 model: 'User',
+                 select: 'avatar fullname'
+               } 
+            })
 
          res.json({
             status: 'success',
