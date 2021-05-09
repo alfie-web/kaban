@@ -6,7 +6,6 @@ const checkAuth = require('../middlewares/checkAuth')
 const cardsController = new CardsController()
 const routes = new Router()
 
-routes.get('/:listId', checkAuth, cardsController.getAllByListId)
 routes.post('/create', checkAuth, cardsController.create)
 routes.post('/edit', checkAuth, cardsController.editCard)
 routes.post('/delete', checkAuth, cardsController.deleteCard)
