@@ -1,0 +1,27 @@
+@import '../../../../styles/vars'
+
+.EditModal
+	&__title
+		font: 18px $bold
+
+	&__date
+		position: relative
+
+		.EditModal__title
+			margin-bottom: 5px
+
+		&-info
+			margin-top: 30px
+			cursor: pointer
+
+			svg
+				transform: translateY(3px)
+				margin-right: 10px
+
+	&__calendar
+		position: absolute
+		top: 60px
+		left: 0
+		width: 100%
+		// max-width: 360px
+		box-shadow: $shadow

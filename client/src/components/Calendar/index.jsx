@@ -59,8 +59,8 @@ const Calendar = ({
       if (!target) return
 
       const { day, month, year } = target.dataset
-      console.log({ day, month, year })
-      onDaySelect(day)
+      // console.log({ day, month, year })
+      onDaySelect({ day, month, year })
    }
 
    const isLeapYear = (year) => !(year % 4 || (!(year % 100) && year % 400))
@@ -240,7 +240,7 @@ const Calendar = ({
                                           date.month,
                                           date.year
                                        ),
-                                       'selected disabled': date.day === day,
+                                       'selected disabled': date.day === day && date.month + 1 === month && date.year === year,
                                     })}
                                  >
                                     <span className="dayNumber">

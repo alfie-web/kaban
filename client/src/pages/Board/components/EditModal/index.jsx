@@ -5,8 +5,9 @@ import { setEditedCard } from '../../../../store/reducers/lists'
 import { editCard } from '../../../../store/reducers/lists'
 import Modal from '../../../../components/Modal'
 import TitleInput from './components/TitleInput'
-import Calendar from '../../../../components/Calendar'
+import DatePicker from './components/DatePicker'
 
+import './EditModal.sass'
 
 const EditModal = () => {
 	const dispatch = useDispatch()
@@ -31,7 +32,10 @@ const EditModal = () => {
 					onBlur={changeCard}
 				/>
 
-				<Calendar />
+				<DatePicker 
+					date={editedCard.date}
+					onChange={changeCard}
+				/>
 			</Modal>
 		</div>
 	) : null
