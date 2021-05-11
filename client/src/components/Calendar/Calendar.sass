@@ -1,0 +1,88 @@
+@import '../../styles/vars'
+
+.Calendar
+	position: relative
+	z-index: 100
+	background-color: white
+	border-radius: 10px
+	padding: 20px
+
+	&__btn
+		border: none
+		outline: none
+		background-color: transparent
+		cursor: pointer
+
+		&:hover
+			svg
+				stroke: $orange1
+
+		svg
+			stroke: $black
+			transition: stroke .2s
+
+	&__header
+		font: 18px/25px $bold
+		display: flex
+		justify-content: space-between
+		padding: 0 10px 20px
+
+	&__view
+		width: 100%
+		// height: 100%
+		text-align: left
+		border-collapse: collapse !important
+		border: none
+
+		th
+			border-bottom: none !important
+
+		th, td
+			box-sizing: border-box
+			text-align: center
+			min-width: 40px
+			min-height: 40px
+			padding: 10px 0
+			font: 18px/25px $bold
+
+		th
+			color: $gray
+
+		td
+			position: relative
+			cursor: pointer
+
+			&::before
+				content: ''
+				position: absolute
+				top: 50%
+				left: 50%
+				transform: translate(-50%, -54%)
+				width: 40px
+				height: 40px
+				border-radius: 50%
+				z-index: 10
+
+			&:hover
+				z-index: 10
+				&::before
+					background-color: $light
+
+			.dayNumber
+				position: relative
+				z-index: 20
+
+			&.today
+				color: $orange1
+
+			&.selected
+				z-index: 10
+				&::before
+					background: $gradient
+
+				.dayNumber
+					color: white
+
+			&.disabled
+				color: $light2
+				pointer-events: none
