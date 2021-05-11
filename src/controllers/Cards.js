@@ -95,25 +95,45 @@ module.exports = class Card {
    //       )
    // }
 
-   editCard = (req, res) => {
-      const { cardId, text } = req.body
+   editCard = async (req, res) => {
+      const { cardId, prop, value } = req.body
 
-      CardModel.updateOne({ _id: cardId }, { text })
-         .exec()
-         .then(() => {
-            res.json({
-               status: 'success',
-               data: 'Card has been successfully edited',
-            })
+      try {
+         await CardModel.updateOne({ _id: cardId }, { [prop]: value })
+
+         res.json({
+            status: 'success',
+            data: 'Card has been successfully edited',
          })
-         .catch((err) =>
-            res.status(404).json({
-               status: 'error',
-               message: 'Invalid card data provided',
-               err,
-            })
-         )
+
+      } catch (error) {
+         res.status(404).json({
+            status: 'error',
+            message: 'Invalid card data provided',
+            err,
+         })
+      }
    }
+
+   // editCard = (req, res) => {
+   //    const { cardId, text } = req.body
+
+   //    CardModel.updateOne({ _id: cardId }, { text })
+   //       .exec()
+   //       .then(() => {
+   //          res.json({
+   //             status: 'success',
+   //             data: 'Card has been successfully edited',
+   //          })
+   //       })
+   //       .catch((err) =>
+   //          res.status(404).json({
+   //             status: 'error',
+   //             message: 'Invalid card data provided',
+   //             err,
+   //          })
+   //       )
+   // }
 
    deleteCard = (req, res) => {
       const { listId, cardId } = req.body

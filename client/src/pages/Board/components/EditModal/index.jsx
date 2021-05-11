@@ -1,36 +1,55 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, memo } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { setEditedCard } from '../../../../store/reducers/lists'
 
+import { editCard } from '../../../../store/reducers/lists'
 import Modal from '../../../../components/Modal'
+import TitleInput from './components/TitleInput'
+
 
 const EditModal = () => {
 	const dispatch = useDispatch()
 	const { editedCard } = useSelector(state => state.lists)
-	const [modalVisible, setModalVisible] = useState(false)
+	// const [formData, setFormData] = useState(editedCard)
 
-	useEffect(() => {
-		setModalVisible(editedCard)
-	}, [editedCard])
+	// useEffect(() => {
+	// 	setFormData(editedCard)
+	// }, [editedCard])
 
 	const closeModal = () => {
-		setModalVisible(false)
+		// setFormData(false)
 		dispatch(setEditedCard(null))
 	}
 
-	return modalVisible ? (
+	// const changeFormData = (prop, value) => {
+	// 	setFormData(prev => ({
+	// 		...prev,
+	// 		[prop]: value
+	// 	}))
+	// }
+
+	const changeCard = ({ prop, value }) => {
+		// console.log({ listId: editedCard.listId, cardId: editedCard._id, prop, value })
+		editedCard[prop] !== value && dispatch(editCard({ listId: editedCard.listId, cardId: editedCard._id, prop, value }))
+	}
+
+	return editedCard ? (
 		<div className="BoardPage__modal">
 			<Modal 
-				isVisible={modalVisible}
+				isVisible={editedCard}
 				onClose={closeModal}
 			>
-				Modal content
+				<TitleInput 
+					title={editedCard.title}
+					// changeFormData={changeFormData}
+					onBlur={changeCard}
+				/>
 			</Modal>
 		</div>
 	) : null
 }
 
-export default EditModal
+export default memo(EditModal)
 
 
 
@@ -43,29 +62,63 @@ export default EditModal
 
 
 
-// import { useState } from 'react'
-// import { useSelector } from 'react-redux'
+
+
+
+
+
+
+
+
+
+
+
+// import { useState, useEffect } from 'react'
+// import { useSelector, useDispatch } from 'react-redux'
 // import { setEditedCard } from '../../../../store/reducers/lists'
 
 // import Modal from '../../../../components/Modal'
+// import TitleInput from './components/TitleInput'
+
 
 // const EditModal = () => {
-// 	const [modalVisible, setModalVisible] = useState(false)
+// 	const dispatch = useDispatch()
 // 	const { editedCard } = useSelector(state => state.lists)
+// 	const [formData, setFormData] = useState(editedCard)
+
+// 	useEffect(() => {
+// 		setFormData(editedCard)
+// 	}, [editedCard])
 
 // 	const closeModal = () => {
-// 		setModalVisible(false)
-// 		setEditedCard(null)
+// 		setFormData(false)
+// 		dispatch(setEditedCard(null))
 // 	}
 
-// 	return editedCard ? (
+// 	const changeFormData = (prop, value) => {
+// 		setFormData(prev => ({
+// 			...prev,
+// 			[prop]: value
+// 		}))
+// 	}
+
+// 	const changeCard = () => {
+// 		// запрос на изменение (передаю formData)
+// 		console.log(formData)
+// 	}
+
+// 	return formData ? (
 // 		<div className="BoardPage__modal">
-// 			{modalVisible && <Modal 
-// 				isVisible={modalVisible}
+// 			<Modal 
+// 				isVisible={formData}
 // 				onClose={closeModal}
 // 			>
-// 				Modal content
-// 			</Modal>}
+// 				<TitleInput 
+// 					title={formData.title}
+// 					changeFormData={changeFormData}
+// 					onBlur={changeCard}
+// 				/>
+// 			</Modal>
 // 		</div>
 // 	) : null
 // }

@@ -1,0 +1,59 @@
+@import '../../styles/vars'
+
+.Input, .Textarea
+	$self: &
+	position: relative
+	overflow: hidden
+
+	&__error-msg
+		font: 14px $regular
+		color: $orange1
+		margin: 5px 0 0 30px
+
+	&__icon
+		position: absolute
+		right: 30px
+		top: 50%
+		transform: translateY(-50%)
+		height: 24px
+
+		svg
+			height: 22px
+			width: auto
+			fill: $gray
+			transition: fill .2s
+
+	input
+		text-overflow: ellipsis
+
+	input, textarea
+		width: 100%
+		padding: 14px 20px
+		border: 1px solid $light2
+		outline: none
+		border-radius: 10px
+		font: 18px $regular
+		background-color: transparent
+		transition: border-color .2s
+
+		&:hover
+			border-color: rgba(141, 164, 185, .3)
+
+		&::placeholder
+			color: $black
+
+		&:focus
+			border-color: $orange1
+
+			+ .Input__icon
+				svg
+					fill: $orange1
+
+	textarea
+		height: 120px
+		resize: none
+		font: 18px/30px $regular
+
+	&--error
+		input, textarea
+			border: 2px solid $orange1

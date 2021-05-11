@@ -38,6 +38,14 @@ export const listsSlice = createSlice({
 			}
       },
 
+		setEditedCardData: (state, { payload }) => {
+			const list = state.items.find(l => l._id === payload.listId)
+			const card = list.cardItems.find(c => c._id === payload.cardId)
+
+			card[payload.prop] = payload.value
+			state.editedCard[payload.prop] = payload.value
+		},
+
 		setNewList: (state, { payload }) => {
          state.items.push(payload)
       },
@@ -87,7 +95,8 @@ export const {
    setMoveList,
    setIsFetching,
    setIsCardsFetching,
-	setEditedCard
+	setEditedCard,
+	setEditedCardData
 } = listsSlice.actions
 
 export const fetchLists = (boardId) => async (dispatch) => {
@@ -161,6 +170,17 @@ export const moveCard = (moveData) => async (dispatch) => {
 
    try {
       await listsAPI.moveCard(moveData)
+
+   } catch (error) {
+
+	}
+}
+
+export const editCard = ({ cardId, listId, prop, value }) => async dispatch => {
+	try {
+      await cardsAPI.editCard({ cardId, prop, value })
+
+		dispatch(setEditedCardData({ cardId, listId, prop, value }))
 
    } catch (error) {
 
