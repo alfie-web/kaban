@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import addZero from '../../../../../../helpers/addZero'
 import TimePicker from '../../../../../../components/TimePicker'
+import DropDown from '../../../../../../components/DropDown'
 
 const Time = ({ time, onChange }) => {
 	const [isVisible, setIsVisible] = useState(false)
@@ -12,10 +13,12 @@ const Time = ({ time, onChange }) => {
 		setIsVisible(false)
 	}
 
+	const onClose = () => setIsVisible(false)
+
 	return (
 		<div className="EditModal__timepicker">
 			<div 
-				className="EditModal__date-info"
+				className="EditModal__info"
 				onClick={() => setIsVisible(!isVisible)}
 			>
 				<h3 className="EditModal__title">Время завершения</h3>
@@ -28,14 +31,17 @@ const Time = ({ time, onChange }) => {
 				</span>
 			</div>
 
-			{ isVisible && <div className="EditModal__time fadeInUp">
+			<DropDown
+				isVisible={isVisible}
+				onClose={onClose}
+				className="EditModal__time"
+			>
 				<TimePicker 
 					hours={+parsedTime[0]}
 					minutes={+parsedTime[1]}
 					onTimeSelect={onTimeSelect}
 				/>
-			</div> }
-			
+			</DropDown>
 		</div>
 	)
 }

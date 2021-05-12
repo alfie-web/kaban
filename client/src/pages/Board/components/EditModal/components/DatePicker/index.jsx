@@ -1,7 +1,8 @@
-import { useState, memo } from 'react'
+import { useState } from 'react'
 
 import addZero from '../../../../../../helpers/addZero'
 import Calendar from '../../../../../../components/Calendar'
+import DropDown from '../../../../../../components/DropDown'
 
 const DatePicker = ({ date, onChange }) => {
 	const [calendarVisible, setCalendarVisible] = useState(false)
@@ -12,10 +13,12 @@ const DatePicker = ({ date, onChange }) => {
 		setCalendarVisible(false)
 	}
 
+	const onClose = () => setCalendarVisible(false)
+
 	return (
 		<div className="EditModal__date">
 			<div 
-				className="EditModal__date-info"
+				className="EditModal__info"
 				onClick={() => setCalendarVisible(!calendarVisible)}
 			>
 				<h3 className="EditModal__title">Дата завершения</h3>
@@ -27,16 +30,20 @@ const DatePicker = ({ date, onChange }) => {
 				</span>
 			</div>
 
-			{ calendarVisible && <div className="EditModal__calendar fadeInUp">
+			<DropDown
+				isVisible={calendarVisible}
+				onClose={onClose}
+				className="EditModal__calendar"
+			>
 				<Calendar
 					day={+parsedDate[0]}
 					month={+parsedDate[1]}
 					year={+parsedDate[2]}
 					onDaySelect={onDateSelect}
 				/>
-			</div> }
+			</DropDown>
 		</div>
 	)
 }
 
-export default memo(DatePicker)
+export default DatePicker

@@ -42,7 +42,7 @@ const Calendar = ({
 
    const [selectedDate, setSelectedDate] = useState()
 
-   console.log('RENDER')
+   // console.log('RENDER')
 
    useEffect(() => {
       const today = new Date()
