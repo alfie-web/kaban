@@ -66,7 +66,7 @@ function List({
             <div
                {...provided.draggableProps}
                ref={provided.innerRef}
-               className={clsx('List', className, {
+               className={clsx('List Scroll', className, {
                   'List--dragging': snapshot.isDragging,
                })}
             >

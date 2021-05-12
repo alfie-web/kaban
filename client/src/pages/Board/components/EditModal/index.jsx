@@ -6,6 +6,9 @@ import { editCard } from '../../../../store/reducers/lists'
 import Modal from '../../../../components/Modal'
 import TitleInput from './components/TitleInput'
 import DatePicker from './components/DatePicker'
+import TimePicker from './components/TimePicker'
+
+
 
 import './EditModal.sass'
 
@@ -32,10 +35,17 @@ const EditModal = () => {
 					onBlur={changeCard}
 				/>
 
-				<DatePicker 
-					date={editedCard.date}
-					onChange={changeCard}
-				/>
+				<div className="EditModal__row">
+					<DatePicker 
+						date={editedCard.date}
+						onChange={changeCard}
+					/>
+
+					<TimePicker 
+						time={editedCard.time}
+						onChange={changeCard}
+					/>
+				</div>
 			</Modal>
 		</div>
 	) : null

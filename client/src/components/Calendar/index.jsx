@@ -3,12 +3,10 @@ import clsx from 'clsx'
 
 import './Calendar.sass'
 
-const today = new Date()
-
 const Calendar = ({
-   day = today.getDate(),
-   month = today.getMonth() + 1,
-   year = today.getFullYear(),
+   day,
+   month,
+   year,
    onDaySelect = () => {},
 }) => {
    const DAYS_IN_MONTH = useRef([
@@ -47,10 +45,12 @@ const Calendar = ({
    console.log('RENDER')
 
    useEffect(() => {
+      const today = new Date()
+
       setSelectedDate({
-         day,
-         month: month - 1,
-         year,
+         day: day ? +day : today.getDate(),
+         month: month ? +month - 1 : today.getMonth(),
+         year: year ? +year : today.getFullYear(),
       })
    }, [day, month, year])
 

@@ -13,10 +13,6 @@
 	z-index: 2000
 	background-color: rgba(0, 0, 0, 0.5)
 
-	&__overlay
-		transition: opacity .3s
-		animation: fade .3s
-
 	&__content
 		position: relative
 		z-index: 2000
@@ -25,19 +21,3 @@
 		max-width: 500px
 		margin: 50px auto
 		padding: 40px
-		transition: opacity .3s, transform .3s
-		animation: show .3s
-
-@keyframes show
-	0%
-		transform: translateY(30px)
-		opacity: 0
-	100%
-		transform: translateY(0)
-		opacity: 1
-
-@keyframes fade
-	0%
-		opacity: 0
-	100%
-		opacity: 1

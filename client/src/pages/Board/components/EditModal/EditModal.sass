@@ -4,8 +4,9 @@
 	&__title
 		font: 18px $bold
 
-	&__date
+	&__date, &__timepicker
 		position: relative
+		flex: 1
 
 		.EditModal__title
 			margin-bottom: 5px
@@ -18,10 +19,18 @@
 				transform: translateY(3px)
 				margin-right: 10px
 
-	&__calendar
+	&__calendar, &__time
 		position: absolute
 		top: 60px
 		left: 0
 		width: 100%
-		// max-width: 360px
 		box-shadow: $shadow
+
+	&__calendar
+		min-width: 340px
+
+	&__time
+		min-width: 220px
+
+	&__row
+		display: flex
