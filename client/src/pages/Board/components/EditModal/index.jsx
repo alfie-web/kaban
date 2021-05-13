@@ -7,6 +7,7 @@ import Modal from '../../../../components/Modal'
 import TitleInput from './components/TitleInput'
 import DatePicker from './components/DatePicker'
 import TimePicker from './components/TimePicker'
+import Marks from './components/Marks'
 
 
 
@@ -43,6 +44,13 @@ const EditModal = () => {
 
 					<TimePicker 
 						time={editedCard.time}
+						onChange={changeCard}
+					/>
+				</div>
+
+				<div className="EditModal__row">
+					<Marks 
+						marks={editedCard.marks}
 						onChange={changeCard}
 					/>
 				</div>

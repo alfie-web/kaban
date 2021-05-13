@@ -33,7 +33,7 @@ const DatePicker = ({ date, onChange }) => {
 			<DropDown
 				isVisible={calendarVisible}
 				onClose={onClose}
-				className="EditModal__calendar"
+				className="EditModal__calendar EditModal__dropdown"
 			>
 				<Calendar
 					day={+parsedDate[0]}

@@ -34,7 +34,7 @@ const Time = ({ time, onChange }) => {
 			<DropDown
 				isVisible={isVisible}
 				onClose={onClose}
-				className="EditModal__time"
+				className="EditModal__dropdown EditModal__time"
 			>
 				<TimePicker 
 					hours={+parsedTime[0]}

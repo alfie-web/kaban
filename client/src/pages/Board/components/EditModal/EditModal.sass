@@ -4,7 +4,7 @@
 	&__title
 		font: 18px $bold
 
-	&__date, &__timepicker
+	&__date, &__timepicker, &__marks
 		position: relative
 		flex: 1
 
@@ -20,11 +20,11 @@
 			margin-right: 10px
 
 
-	&__calendar, &__time
+	&__dropdown
 		position: absolute
 		top: 60px
-		left: -30px
-		width: 100%
+		left: -25px
+		// width: 100%
 		box-shadow: $shadow
 		z-index: 2
 
@@ -33,6 +33,44 @@
 
 	&__time
 		min-width: 220px
-
+	
 	&__row
 		display: flex
+		
+
+	
+	&__marks
+		.ColorPicker
+			display: flex
+			flex-wrap: wrap
+			max-width: 220px
+			padding: 20px
+			background-color: white
+			border-radius: 10px
+
+			&__color
+				position: relative
+				width: 35px
+				height: 35px
+				border-radius: 50%
+				margin: 5px
+				cursor: pointer
+
+				svg
+					position: absolute
+					top: 50%
+					left: 50%
+					transform: translate(-50%, -50%)
+					pointer-events: none
+
+
+	&__selectedMarks
+		display: flex
+		flex-wrap: wrap
+		margin-left: -5px
+
+		.ColorPicker__color
+			width: 25px
+			height: 25px
+
+			
