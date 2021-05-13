@@ -28,11 +28,12 @@
 
 	input, textarea
 		width: 100%
-		padding: 14px 20px
+		padding: 11px 20px
 		border: 1px solid $light2
 		outline: none
 		border-radius: 10px
-		font: 18px $regular
+		// font: 18px $regular
+		font: 18px/30px $regular
 		background-color: transparent
 		transition: border-color .2s
 
@@ -50,8 +51,10 @@
 					fill: $orange1
 
 	textarea
-		height: 120px
-		resize: none
+		height: 54px
+		min-height: 54px
+		max-height: 200px
+		resize: vertical
 		font: 18px/30px $regular
 
 	&--error

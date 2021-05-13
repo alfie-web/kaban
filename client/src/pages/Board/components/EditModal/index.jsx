@@ -5,6 +5,7 @@ import { setEditedCard } from '../../../../store/reducers/lists'
 import { editCard } from '../../../../store/reducers/lists'
 import Modal from '../../../../components/Modal'
 import TitleInput from './components/TitleInput'
+import DescriptionInput from './components/DescriptionInput'
 import DatePicker from './components/DatePicker'
 import TimePicker from './components/TimePicker'
 import Marks from './components/Marks'
@@ -52,6 +53,13 @@ const EditModal = () => {
 					<Marks 
 						marks={editedCard.marks}
 						onChange={changeCard}
+					/>
+				</div>
+
+				<div className="EditModal__row">
+					<DescriptionInput 
+						description={editedCard.description}
+						onBlur={changeCard}
 					/>
 				</div>
 			</Modal>
