@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import clsx from 'clsx'
 import { Draggable } from 'react-beautiful-dnd'
 
@@ -13,18 +13,16 @@ function Card({
    listId
 }) {
    const { _id, title, marks, date, time, responsibleUsers, description } = card
-   const [editMode, setEditMode] = useState(false)
 
    return (
       <Draggable draggableId={_id} index={index}>
          {(provided, snapshot) => (
             <div
                {...provided.draggableProps}
-               {...provided.dragHandleProps} // Эта штука отвечает за зону за которую можно потянуть. Если нам нужно тянуть карточку не за всю целиком а за заголовок, мы должны передать эти пропсы туда
+               {...provided.dragHandleProps} // Эта штука отвечает за зону за которую можно потянуть. Если хочется тянуть например только за заголовок, нужно передать эти пропсы туда
                ref={provided.innerRef}
                className={clsx('Card', className, {
                   'Card--dragging': snapshot.isDragging,
-                  'Card--editMode': editMode,
                })}
                data-id={_id}
                data-listid={listId}
@@ -37,12 +35,7 @@ function Card({
                   </div>
                ): null}
 
-               <div
-                  className="Card__text"
-                  onDoubleClick={() => setEditMode(true)}
-               >
-                  {title}
-               </div>
+               <div className="Card__text">{title}</div>
 
                <div className="Card__bottom">
                   <div className="Card__bottom-left">
