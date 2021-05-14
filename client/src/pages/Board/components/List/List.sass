@@ -15,7 +15,8 @@
 		padding: 0 8px 0 20px
 		box-sizing: border-box
 		// TODO: Вынести эти отступы в переменные
-		max-height: calc(100vh - 66px - 66px - 57px - 100px)
+		// max-height: calc(100vh - 66px - 66px - 57px - 100px)
+		max-height: calc(100vh - 65px - 65px - 50px - 100px)
 		overflow-y: scroll	
 
 	&__header
@@ -31,6 +32,9 @@
 	&__title
 		font: 18px $bold
 		color: white
+		white-space: nowrap
+		text-overflow: ellipsis
+		overflow: hidden
 
 	&__addCardBtn
 		margin-top: 10px
