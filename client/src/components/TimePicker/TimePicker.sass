@@ -1,0 +1,45 @@
+@import '../../styles/vars'
+	
+.TimePicker
+	display: flex
+	background-color: #fff
+	border-radius: 10px
+	padding: 20px 0
+
+	&__numbers
+		flex: 1
+		height: 214px
+		overflow-y: auto
+		padding: 4px 10px 0
+
+	&__number
+		position: relative
+		min-width: 40px
+		min-height: 40px
+		text-align: center
+		padding: 10px
+		cursor: pointer
+		font: 18px $bold
+
+		&::before
+			content: ''
+			position: absolute
+			top: 50%
+			left: 50%
+			transform: translate(-50%, -54%)
+			width: 40px
+			height: 40px
+			border-radius: 50%
+			// z-index: 10
+
+		&:hover::before
+			background-color: $light
+			
+		span
+			position: relative
+			z-index: 20
+
+		&.selected
+			color: white
+			&::before
+				background: $gradient

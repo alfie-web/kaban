@@ -26,6 +26,10 @@ module.exports = class Boards {
 
       BoardModel.findOne({ _id: boardId, users: userId })
          .select('-lists')
+         .populate({ 
+            path: 'users',
+            select: 'avatar fullname'
+         })
          .exec()
          .then((board) => {
             res.json({

@@ -8,7 +8,8 @@ export const listsSlice = createSlice({
    initialState: {
       items: [],
 		isFetching: false,
-		isCardsFetching: null	// TODO: Сделать в виде массива
+		isCardsFetching: null,	// TODO: Сделать в виде массива
+		editedCard: null
    },
    reducers: {
 		setLists: (state, { payload }) => {
@@ -24,6 +25,27 @@ export const listsSlice = createSlice({
 
 			findedList.isLastPage = payload.isLastPage
       },
+
+		setEditedCard: (state, { payload }) => {
+			if (!payload) {
+				state.editedCard = null
+			} else {
+				const list = state.items.find(l => l._id === payload.listId)
+	
+				if (list) {
+					state.editedCard = list.cardItems.find(c => c._id === payload.cardId)
+				}
+			}
+      },
+
+		setEditedCardData: (state, { payload }) => {
+			const list = state.items.find(l => l._id === payload.listId)
+			const card = list.cardItems.find(c => c._id === payload.cardId)
+
+			card[payload.prop] = payload.value
+			state.editedCard[payload.prop] = payload.value
+		},
+
 		setNewList: (state, { payload }) => {
          state.items.push(payload)
       },
@@ -73,6 +95,8 @@ export const {
    setMoveList,
    setIsFetching,
    setIsCardsFetching,
+	setEditedCard,
+	setEditedCardData
 } = listsSlice.actions
 
 export const fetchLists = (boardId) => async (dispatch) => {
@@ -146,6 +170,25 @@ export const moveCard = (moveData) => async (dispatch) => {
 
    try {
       await listsAPI.moveCard(moveData)
+
+   } catch (error) {
+
+	}
+}
+
+// TODO: Порефакторить это безобразие
+// Как вар возвращать с сервера респонс данные 
+// и после из диспатчить
+export const editCard = ({ cardId, listId, prop, value }) => async dispatch => {
+	try {
+		if (prop === 'responsibleUsers') {
+			const prepared = value.map(u => u._id)
+			await cardsAPI.editCard({ cardId, prop, value: prepared })
+		} else {
+			await cardsAPI.editCard({ cardId, prop, value })
+		}
+
+		dispatch(setEditedCardData({ cardId, listId, prop, value }))
 
    } catch (error) {
 

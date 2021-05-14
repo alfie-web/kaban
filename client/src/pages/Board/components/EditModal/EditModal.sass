@@ -1,0 +1,102 @@
+@import '../../../../styles/vars'
+
+.EditModal
+	&__title
+		font: 18px $bold
+
+	&__date, &__timepicker, &__marks, &__users
+		position: relative
+		flex: 1
+
+	&__title
+		margin-bottom: 5px
+
+	&__description
+		width: 100%
+
+	&__info
+		cursor: pointer
+
+		svg
+			transform: translateY(3px)
+			margin-right: 10px
+
+
+	&__dropdown
+		position: absolute
+		top: 60px
+		left: -25px
+		// width: 100%
+		box-shadow: $shadow
+		z-index: 2
+		border-radius: 10px
+
+	&__calendar
+		min-width: 340px
+
+	&__time
+		min-width: 220px
+	
+	&__row
+		display: flex
+		margin-top: 30px
+
+	
+	&__marks
+		.ColorPicker
+			display: flex
+			flex-wrap: wrap
+			max-width: 220px
+			padding: 20px
+			background-color: white
+			border-radius: 10px
+
+			&__color
+				position: relative
+				width: 35px
+				height: 35px
+				border-radius: 50%
+				margin: 5px
+				cursor: pointer
+
+				svg
+					position: absolute
+					top: 50%
+					left: 50%
+					transform: translate(-50%, -50%)
+					pointer-events: none
+
+
+	&__selectedMarks, &__selectedUsers
+		display: flex
+		flex-wrap: wrap
+		margin-left: -5px
+
+		.ColorPicker__color
+			width: 25px
+			height: 25px
+
+	&__selectedUsers
+		.Avatar
+			margin: 5px
+
+	&__users	
+		&-list
+			padding: 10px 0
+			background-color: white
+			border-radius: 10px
+			max-height: 200px
+			overflow-y: auto
+
+		&-item
+			display: flex
+			align-items: center
+			padding: 10px 20px
+			cursor: pointer
+			user-select: none
+
+			.Avatar
+				margin-right: 10px
+
+			&.selected
+				background-color: $light

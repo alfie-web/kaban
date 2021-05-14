@@ -7,7 +7,7 @@ const cardsController = new CardsController()
 const routes = new Router()
 
 routes.post('/create', checkAuth, cardsController.create)
-routes.post('/edit', checkAuth, cardsController.editCard)
-routes.post('/delete', checkAuth, cardsController.deleteCard)
+routes.patch('/edit', checkAuth, cardsController.editCard)
+routes.delete('/delete', checkAuth, cardsController.deleteCard)
 
 module.exports = routes
