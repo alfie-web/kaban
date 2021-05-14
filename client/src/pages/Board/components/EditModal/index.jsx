@@ -9,6 +9,7 @@ import DescriptionInput from './components/DescriptionInput'
 import DatePicker from './components/DatePicker'
 import TimePicker from './components/TimePicker'
 import Marks from './components/Marks'
+import ResponsibleUsers from './components/ResponsibleUsers'
 
 
 
@@ -52,6 +53,11 @@ const EditModal = () => {
 				<div className="EditModal__row">
 					<Marks 
 						marks={editedCard.marks}
+						onChange={changeCard}
+					/>
+
+					<ResponsibleUsers 
+						responsibleUsers={editedCard.responsibleUsers}
 						onChange={changeCard}
 					/>
 				</div>

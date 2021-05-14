@@ -176,9 +176,17 @@ export const moveCard = (moveData) => async (dispatch) => {
 	}
 }
 
+// TODO: Порефакторить это безобразие
+// Как вар возвращать с сервера респонс данные 
+// и после из диспатчить
 export const editCard = ({ cardId, listId, prop, value }) => async dispatch => {
 	try {
-      await cardsAPI.editCard({ cardId, prop, value })
+		if (prop === 'responsibleUsers') {
+			const prepared = value.map(u => u._id)
+			await cardsAPI.editCard({ cardId, prop, value: prepared })
+		} else {
+			await cardsAPI.editCard({ cardId, prop, value })
+		}
 
 		dispatch(setEditedCardData({ cardId, listId, prop, value }))
 

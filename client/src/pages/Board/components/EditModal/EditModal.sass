@@ -4,7 +4,7 @@
 	&__title
 		font: 18px $bold
 
-	&__date, &__timepicker, &__marks
+	&__date, &__timepicker, &__marks, &__users
 		position: relative
 		flex: 1
 
@@ -29,6 +29,7 @@
 		// width: 100%
 		box-shadow: $shadow
 		z-index: 2
+		border-radius: 10px
 
 	&__calendar
 		min-width: 340px
@@ -66,7 +67,7 @@
 					pointer-events: none
 
 
-	&__selectedMarks
+	&__selectedMarks, &__selectedUsers
 		display: flex
 		flex-wrap: wrap
 		margin-left: -5px
@@ -75,4 +76,27 @@
 			width: 25px
 			height: 25px
 
-			
+	&__selectedUsers
+		.Avatar
+			margin: 5px
+
+	&__users	
+		&-list
+			padding: 10px 0
+			background-color: white
+			border-radius: 10px
+			max-height: 200px
+			overflow-y: auto
+
+		&-item
+			display: flex
+			align-items: center
+			padding: 10px 20px
+			cursor: pointer
+			user-select: none
+
+			.Avatar
+				margin-right: 10px
+
+			&.selected
+				background-color: $light
