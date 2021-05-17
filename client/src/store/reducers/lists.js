@@ -54,6 +54,10 @@ export const listsSlice = createSlice({
 		setNewList: (state, { payload }) => {
          state.items.push(payload)
       },
+		setDeleteList: (state, { payload }) => {
+         state.items = state.items.filter(l => l._id !== payload)
+      },
+
 		setNewCard: (state, { payload }) => {
          const findedList = state.items.find(item => item._id === payload.listId)
 			findedList.cardItems.push(payload)
@@ -102,7 +106,8 @@ export const {
    setIsCardsFetching,
 	setEditedCard,
 	setEditedCardData,
-	setDeleteCard
+	setDeleteCard,
+	setDeleteList
 } = listsSlice.actions
 
 export const fetchLists = (boardId) => async (dispatch) => {
@@ -154,6 +159,18 @@ export const createList = (boardId, title) => async (dispatch) => {
 		dispatch(setNewList(data.data))
    } catch (error) {
 
+	}
+}
+
+export const deleteList = listId => async dispatch => {
+	if (window.confirm('Хотите удалить лист со всеми карточками?')) {
+		try {
+			await listsAPI.deleteList(listId)
+			dispatch(setDeleteList(listId))
+			
+		} catch (error) {
+			console.error(error)
+		}
 	}
 }
 

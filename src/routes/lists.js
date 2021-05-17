@@ -10,5 +10,6 @@ routes.get('/getCards/:id', listsController.getCards)
 routes.get('/:boardId', checkAuth, listsController.getAll)
 routes.post('/create', checkAuth, listsController.create)
 routes.post('/moveCard', checkAuth, listsController.moveCard)
+routes.delete('/delete/:id', checkAuth, listsController.delete)
 
 module.exports = routes
