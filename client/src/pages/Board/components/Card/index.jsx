@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useMemo, memo } from 'react'
 import clsx from 'clsx'
 import { Draggable } from 'react-beautiful-dnd'
 
@@ -14,8 +14,6 @@ function Card({
 }) {
    const { _id, title, marks, date, time, responsibleUsers, description } = card
    const parsedDateToCompare = useMemo(() => date.split('.').reverse().join('.') + ` ${time}`, [date, time])
-
-   if (_id === '609d9e517c21d41eb0f9831b') console.log(parsedDateToCompare)
 
    return (
       <Draggable draggableId={_id} index={index}>
@@ -109,4 +107,4 @@ function Card({
    )
 }
 
-export default Card
+export default memo(Card)

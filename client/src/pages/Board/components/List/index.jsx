@@ -3,13 +3,15 @@ import { useDispatch } from 'react-redux'
 import clsx from 'clsx'
 import { Droppable, Draggable } from 'react-beautiful-dnd'
 
-import { fetchCards, createCard, setEditedCard } from '../../../../store/reducers/lists'
+import { fetchCards, createCard } from '../../../../store/reducers/lists'
 import useLazyLoading from '../../../../helpers/useLazyLoading'
 
 import Card from '../Card'
 import AddForm from '../AddForm'
+import ListOptionsDropDown from './components/ListsOptionsDropDown'
 import './List.sass'
 
+// TODO: Разбить по компонентам
 function List({
    list,
    className,
@@ -18,20 +20,10 @@ function List({
    const dispatch = useDispatch()
    const { _id, title, cardItems } = list
    const [newCardMode, setNewCardMode] = useState(false)
-   // const isCardsFetching = useSelector(state => state.lists.isCardsFetching)
    const lazyRef = useRef(null)
-
-   console.log('RENDERS', _id)
-
-   // console.log(isCardsFetching)
-   // useEffect(() => {
-   //    // dispatch(getAllCards(_id))
-   //    dispatch(fetchCards(_id))
-   // }, [dispatch, _id])
+   // console.log('RENDERS', _id)
 
    useLazyLoading(lazyRef, () => dispatch(fetchCards(_id)))
-   // useLazyLoading(lazyRef, () => dispatch(fetchCards(_id)), isCardsFetching)
-   // useLazyLoading(lazyRef, () => {}, isCardsFetching)
 
    const onAddCardHandler = (listId, text) => {
       setNewCardMode(false)
@@ -39,26 +31,6 @@ function List({
 
       dispatch(createCard(listId, text))
    }
-
-   // const cardClickHandler = e => {     // Можно его и на контейнер листов повесить
-   //    const card = e.target.closest('.Card')
-   //    if (!card) return
-
-   //    dispatch(setEditedCard({
-   //       listId: _id,
-   //       cardId: card.dataset.id
-   //    }))
-   // }
-
-   // const onEditCardHandler = (listId, cardId, text) => {
-   //    if (!text.length) return
-
-   //    editCard(listId, cardId, text)
-   // }
-
-   // const onDeleteCardHandler = (listId, cardId) => {
-   //    deleteCard({ listId, cardId })
-   // }
 
    return (
       <Draggable draggableId={_id} index={index}>
@@ -70,8 +42,10 @@ function List({
                   'List--dragging': snapshot.isDragging,
                })}
             >
-               <div {...provided.dragHandleProps} className="List__header">
-                  <div className="List__title">{title}</div>
+               <div className="List__header">
+                  <div {...provided.dragHandleProps} className="List__title">{title}</div>
+
+                  <ListOptionsDropDown _id={_id} />
                </div>
 
                <div className="List__body">
@@ -81,7 +55,6 @@ function List({
                            {...provided.droppableProps}
                            ref={provided.innerRef}
                            className="List__cards"
-                           // onDoubleClick={cardClickHandler}
                         >
                            {cardItems && cardItems.length
                               ? cardItems.map((card, index) => {
@@ -92,14 +65,6 @@ function List({
                                        card={card}
                                        listId={_id}
                                        className="Board__list-card"
-                                       //   onEditCardHandler={onEditCardHandler.bind(
-                                       //      null,
-                                       //      _id
-                                       //   )}
-                                       //   onDeleteCardHandler={onDeleteCardHandler.bind(
-                                       //      null,
-                                       //      _id
-                                       //   )}
                                     />
                                  )
                               })

@@ -20,8 +20,9 @@
 		overflow-y: scroll	
 
 	&__header
-		padding: 15px 20px
-		box-sizing: border-box
+		display: flex
+		justify-content: space-between
+		align-items: center
 		outline: none
 
 	&__body
@@ -31,10 +32,37 @@
 
 	&__title
 		font: 18px $bold
+		padding: 15px 20px
+		flex: 1
 		color: white
 		white-space: nowrap
 		text-overflow: ellipsis
 		overflow: hidden
+
+	&__dropdown
+		position: relative
+		padding-right: 10px
+
+		.DropDown
+			right: 0
+
+		&-btn
+			cursor: pointer
+			padding: 10px
+			opacity: .4
+			transition: opacity .2s
+			svg
+				fill: white
+			&--active, &:hover
+				opacity: 1
+
+		&-item
+			white-space: nowrap
+			cursor: pointer
+			transition: color .2s
+			&:hover
+				color: $orange1
+
 
 	&__addCardBtn
 		margin-top: 10px
