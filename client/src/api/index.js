@@ -28,8 +28,6 @@ instance.interceptors.request.use(
       // console.log('AXIOS_CONFIG', config)
       if (ATExpiresIn) {
          if (Date.now() - setverTimeOffset >= +ATExpiresIn * 1000) {
-            console.log(Date.now() - setverTimeOffset, +ATExpiresIn * 1000)
-            console.log('dfdfdfdf')
             try {
                const { data } = await usersAPI.refreshTokens()
 

@@ -146,6 +146,36 @@ module.exports = class List {
          )
    }
 
+   // TODO: Проверить имеет ли пользователь право на удаление
+   delete = async (req, res) => {
+      const listId = req.params.id
+
+      
+      try {
+         const list = await ListModel.findById(listId)
+         list.cards.length && await CardModel.deleteMany({ _id: { $in: list.cards } })
+         
+         const board = await BoardModel.findById(list.boardId)
+         if (board.lists.includes(listId)) {
+            await board.lists.pull(listId)
+            await board.save()
+         }
+         
+         await list.delete()
+
+         res.json({
+            status: 'success',
+            message: 'List and cards successfully deleted',
+         })
+         
+      } catch (error) {
+         res.status(400).json({
+            status: 'error',
+            message: error,
+         })
+      }
+   }
+
    moveCard = (req, res) => {
       const {
          startListId, // id листа из которого перемещаем карточку
