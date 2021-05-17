@@ -19,18 +19,9 @@ const AuthPage = () => {
             </Switch>
 
             <ul className="Auth__info">
-               <li>Инструкция:</li>
-               <li>
-                  1) Авторизуйтесь как Пользователь 1 (user1@mail.ru, 123qweQWE)
-               </li>
-               <li>
-                  2) Откройте эту же страницу в новой вкладке браузера в режиме
-                  инкогнито (Ctrl + Shift + n)
-               </li>
-               <li>
-                  3) Авторизуйтесь как Пользователь 2 (user2@mail.ru, 123qweQWE)
-               </li>
-               <li>4) Выберите Test canvas у каждого пользователя</li>
+               <li>Данные для авторизации:</li>
+               <li> E-mail: user1@mail.ru</li>
+               <li> Пароль: 123qweQWE</li>
             </ul>
          </div>
       </div>
