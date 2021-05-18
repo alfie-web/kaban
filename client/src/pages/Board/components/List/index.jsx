@@ -8,6 +8,7 @@ import useLazyLoading from '../../../../helpers/useLazyLoading'
 
 import AddCardForm from './components/AddCardForm'
 import ListOptionsDropdown from './components/OptionsDropdown'
+import ListPreloader from './components/Preloader'
 import './List.sass'
 
 import ListCards from './components/Cards'
@@ -53,6 +54,8 @@ function List({
                               listId={_id}
                            />
                            {provided.placeholder}
+
+                           <ListPreloader listId={_id} />
 
                            <div className="Lazy" ref={lazyRef}></div>
                         </div>
