@@ -1,24 +1,21 @@
 import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 
 import { fetchBoardById, moveList } from '../../store/reducers/boards'
 import { moveCard, setEditedCard } from '../../store/reducers/lists'
 
-import List from './components/List'
+import BoardLists from './components/BoardLists'
+import BoardBg from './components/Bg'
+import BoardTitle from './components/Title'
 import AddListForm from './components/AddListForm'
 import EditModal from './components/EditModal'
 import './Board.sass'
 
-
 const Board = () => {
 	const { id } = useParams()
 	const dispatch = useDispatch()
-	const currentBoard = useSelector(state => state.boards.currentBoard)
-	const items = useSelector(state => state.lists.items)
-
-   console.log('RENDERS')
 
 	useEffect(() => {
 		id && dispatch(fetchBoardById(id))
@@ -65,12 +62,10 @@ const Board = () => {
 
 	return (
       <>
-         <div className="BoardPage__bg">
-            {currentBoard && <img src={currentBoard.bg} alt="Board bg" />}
-         </div>
+         <BoardBg />
 
          <main className="BoardPage page">
-            <h2 className="BoardPage__title">{currentBoard && currentBoard.title}</h2>
+            <BoardTitle />
             
             <div className="BoardPage__container">
                <DragDropContext onDragEnd={onDragEnd}>
@@ -86,16 +81,7 @@ const Board = () => {
                               ref={provided.innerRef}
                               className="BoardPage__lists-items"
                            >
-                              {items && items.length
-                                 ? items.map((list, index) => (
-                                    <List
-                                       key={list._id}
-                                       index={index}
-                                       className="BoardPage__list"
-                                       list={list}
-                                    />
-                                 ))
-                                 : null}
+                              <BoardLists />
                               {provided.placeholder}
 
                               <AddListForm />
