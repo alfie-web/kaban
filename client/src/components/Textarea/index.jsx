@@ -12,6 +12,7 @@ export default function Textarea({
    name,
    placeholder,
    title = '',
+   autoFocus = false
 }) {
    return (
       <div className={clsx('Textarea Scroll', className)} title={title}>
@@ -27,6 +28,7 @@ export default function Textarea({
             onFocus={onFocus}
             onBlur={onBlur}
             onKeyPress={onKeyPress}
+            autoFocus={autoFocus}
          >
 			</textarea>
       </div>

@@ -6,7 +6,7 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 import { fetchBoardById, moveList } from '../../store/reducers/boards'
 import { moveCard, setEditedCard } from '../../store/reducers/lists'
 
-import BoardLists from './components/BoardLists'
+import BoardLists from './components/Lists'
 import BoardBg from './components/Bg'
 import BoardTitle from './components/Title'
 import AddListForm from './components/AddListForm'

@@ -30,6 +30,9 @@
 		background-color: $light
 		border-radius: 10px
 
+		.List__addListForm
+			margin-top: 20px
+
 	&__title
 		font: 18px $bold
 		padding: 15px 20px
@@ -79,21 +82,20 @@
 		padding: 18px 30px
 		box-sizing: border-box
 		border-radius: 10px
-		// background-color: rgba(255, 255, 255, .1)
 		cursor: pointer
 		user-select: none
 		transition: background .3s, color .3s
 
 		&:hover
-			// background-color: rgba(255, 255, 255, .2)
 			background-color: rgba(255, 255, 255, .1)
 		&:active
 			background: $gradient
-
-	&__addCardForm
-		padding-top: 20px
 
 	&--dragging
 		.List__body
 			background-color: #E9EBEC
 			box-shadow: $shadow
+
+	&__addListForm
+		padding: 0 20px
+		margin-bottom: 10px

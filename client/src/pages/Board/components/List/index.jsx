@@ -1,17 +1,17 @@
-import React, { useState, useRef, memo } from 'react'
+import React, { useRef, memo } from 'react'
 import { useDispatch } from 'react-redux'
 import clsx from 'clsx'
 import { Droppable, Draggable } from 'react-beautiful-dnd'
 
-import { fetchCards, createCard } from '../../../../store/reducers/lists'
+import { fetchCards } from '../../../../store/reducers/lists'
 import useLazyLoading from '../../../../helpers/useLazyLoading'
 
-import Card from '../Card'
-import AddForm from '../AddForm'
-import ListOptionsDropDown from './components/ListsOptionsDropDown'
+import AddCardForm from './components/AddCardForm'
+import ListOptionsDropdown from './components/OptionsDropdown'
 import './List.sass'
 
-// TODO: Разбить по компонентам
+import ListCards from './components/Cards'
+
 function List({
    list,
    className,
@@ -19,18 +19,10 @@ function List({
 }) {
    const dispatch = useDispatch()
    const { _id, title, cardItems } = list
-   const [newCardMode, setNewCardMode] = useState(false)
    const lazyRef = useRef(null)
-   // console.log('RENDERS', _id)
 
+   // TODO: Вынести в компонент Lazy вместе в ref'ом
    useLazyLoading(lazyRef, () => dispatch(fetchCards(_id)))
-
-   const onAddCardHandler = (listId, text) => {
-      setNewCardMode(false)
-      if (!text.length) return
-
-      dispatch(createCard(listId, text))
-   }
 
    return (
       <Draggable draggableId={_id} index={index}>
@@ -45,7 +37,7 @@ function List({
                <div className="List__header">
                   <div {...provided.dragHandleProps} className="List__title">{title}</div>
 
-                  <ListOptionsDropDown _id={_id} />
+                  <ListOptionsDropdown listId={_id} />
                </div>
 
                <div className="List__body">
@@ -56,19 +48,10 @@ function List({
                            ref={provided.innerRef}
                            className="List__cards"
                         >
-                           {cardItems && cardItems.length
-                              ? cardItems.map((card, index) => {
-                                 return (
-                                    <Card
-                                       key={card._id}
-                                       index={index}
-                                       card={card}
-                                       listId={_id}
-                                       className="Board__list-card"
-                                    />
-                                 )
-                              })
-                              : null}
+                           <ListCards 
+                              cardItems={cardItems}
+                              listId={_id}
+                           />
                            {provided.placeholder}
 
                            <div className="Lazy" ref={lazyRef}></div>
@@ -76,23 +59,8 @@ function List({
                      )}
                   </Droppable>
 
-                  {newCardMode && (
-                     <AddForm
-                        callback={onAddCardHandler.bind(null, _id)}
-                        placeholder="Название карточки"
-                        className="List__addCardForm"
-                     />
-                  )}
-                  {!newCardMode && (
-                     <div
-                        className="List__addCardBtn"
-                        onClick={() => setNewCardMode(true)}
-                     >
-                        + Добавить карточку
-                     </div>
-                  )}
+                  <AddCardForm listId={_id} />
                </div>
-
             </div>
          )}
       </Draggable>

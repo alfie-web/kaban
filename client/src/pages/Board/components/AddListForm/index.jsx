@@ -20,7 +20,7 @@ const AddListForm = ({ boardId }) => {
 		setNewListMode(true)
 	}
 
-	const onAddListHandler = (title) => {
+	const addListHandler = (title) => {
 		setNewListMode(false)
 		if (!title.length) return
 
@@ -39,7 +39,7 @@ const AddListForm = ({ boardId }) => {
       {newListMode && (
          <div className="BoardPage__addList">
             <AddForm
-               callback={onAddListHandler}
+               callback={addListHandler}
                placeholder="Название листа"
             />
          </div>
