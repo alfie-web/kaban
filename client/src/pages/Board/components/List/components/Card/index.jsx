@@ -16,7 +16,6 @@ function Card({
    index,
    listId
 }) {
-   console.log('RENDERS')
    const { _id, title, marks, date, time, responsibleUsers, description } = card
 
    return (

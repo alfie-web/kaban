@@ -3,41 +3,7 @@ const ListModel = require('../models/List')
 const CardModel = require('../models/Card')
 
 module.exports = class List {
-   // getAll = async (req, res) => {
-   //    const { boardId } = req.params
-
-   //    try {
-   //       const board = await BoardModel.findOne({ _id: boardId })
-   //       // const lists = await ListModel.find({ boardId }).select('-cards')
-   //       const lists = await ListModel.paginate({ boardId }, {
-   //          select: '-cards',
-   //          limit: 2,
-   //          offset: 0
-   //       })
-
-   //       console.log('LISTS', lists)
-
-   //       // Приходится сортировать, ибо падла не соблюдает порядок
-   //       // (эта штука сортирует массив в соответствии с другим такимже массивом)
-   //       const sortedLists = lists.sort(function (a, b) {
-   //          return (
-   //             board.lists.indexOf(a._id) - board.lists.indexOf(b._id)
-   //          )
-   //       })
-
-   //       res.json({
-   //          status: 'success',
-   //          data: sortedLists,
-   //       })
-
-   //    } catch (e) {
-   //       res.status(400).json({
-   //          status: 'error',
-   //          e,
-   //       })
-   //    }
-   // }
-
+  
    getAll = async (req, res) => {
       const { boardId } = req.params
 
@@ -105,43 +71,33 @@ module.exports = class List {
       }
    }
 
-   create = (req, res) => {
+   create = async (req, res) => {
       const postData = {
          boardId: req.body.boardId,
          title: req.body.title,
          cards: [],
       }
 
-      const list = new ListModel(postData)
+      try {
+         const list = new ListModel(postData)
+         await list.save()
 
-      list
-         .save()
-         .then((newList) => {
-            BoardModel.updateOne(
-               { _id: newList.boardId },
-               { $push: { lists: newList._id } }
-            )
-               .exec()
-               .then(() => {
-                  res.json({
-                     status: 'success',
-                     data: newList,
-                  })
-               })
-               .catch((err) =>
-                  res.status(400).json({
-                     status: 'error',
-                     message: err,
-                  })
-               )
-         })
-         .catch((err) =>
-            res.status(422).json({
-               status: 'error',
-               message: 'Invalid data',
-               err,
-            })
+         await BoardModel.updateOne(
+            { _id: list.boardId },
+            { $push: { lists: { $each: [list._id], $position: req.body.position } } }
          )
+
+         res.json({
+            status: 'success',
+            data: list,
+         })
+         
+      } catch (error) {
+         res.status(400).json({
+            status: 'error',
+            message: error,
+         })
+      }
    }
 
    // TODO: Проверить имеет ли пользователь право на удаление

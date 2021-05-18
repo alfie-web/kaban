@@ -153,9 +153,10 @@ export const fetchCards = (listId) => async (dispatch, getState) => {
 	}
 }
 
-export const createList = (boardId, title) => async (dispatch) => {
+export const createList = (boardId, title) => async (dispatch, getState) => {
+	const { lists } = getState()
    try {
-      const { data } = await listsAPI.createList({ boardId, title })
+      const { data } = await listsAPI.createList({ boardId, title, position: lists.items.length })
 		dispatch(setNewList(data.data))
    } catch (error) {
 
@@ -177,8 +178,6 @@ export const deleteList = listId => async dispatch => {
 export const createCard = (listId, title) => async (dispatch, getState) => {
 	const { lists } = getState()
 	const finded = lists.items.find(l => l._id === listId)
-
-	console.log('finded', finded)
 
 	try {
       const { data } = await cardsAPI.createCard({ listId, title, position: finded.cardItems.length })

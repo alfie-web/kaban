@@ -84,7 +84,7 @@ const Board = () => {
                               <BoardLists />
                               {provided.placeholder}
 
-                              <AddListForm />
+                              <AddListForm boardId={id} />
                            </div>
                         )}
                      </Droppable>
