@@ -6,7 +6,7 @@ let baseURL
 if (process.env.NODE_ENV !== 'production') {
    baseURL = 'http://localhost:7777/api'
 } else {
-   baseURL = 'https://collaborative-paint-app.herokuapp.com/api'
+   baseURL = 'https://app-kaban.herokuapp.com/api'
 }
 
 const axiosConfig = {

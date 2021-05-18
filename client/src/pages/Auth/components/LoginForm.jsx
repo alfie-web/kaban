@@ -26,7 +26,7 @@ const LoginForm = () => {
 
    return (
       <div className="Auth__form">
-         <h2>Вход</h2>
+         <h1>Вход</h1>
 
          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="Input">
@@ -57,7 +57,7 @@ const LoginForm = () => {
             <Button
                type="submit"
                text="Войти"
-               variant="red"
+               variant="blue"
                disabled={isFetching}
             />
          </form>

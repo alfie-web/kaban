@@ -4,9 +4,9 @@
 	$self: &
 	position: relative
 	display: inline-block
-	padding: 12px 30px 13px
+	padding: 15px 30px 16px
 	box-sizing: border-box
-	border-radius: 4px
+	border-radius: $border-radius
 	outline: none
 	border: none
 	font: 18px $regular
@@ -23,7 +23,7 @@
 		height: 100%
 		top: 0
 		left: 0
-		border-radius: 4px
+		border-radius: $border-radius
 		background-color: rgba(237, 243, 251, .4)
 		z-index: -1
 		transition: color .2s, background-color .2s, box-shadow .2s
@@ -91,21 +91,13 @@
 			&::before
 				background-color: $orange1
 
-	&--red
-		color: white
-		&::before
-			background-color: $orange1
-		&:hover, &.Button--active
-			&::before
-				background-color: $orange1
-
 	&--blue
 		color: white
 		&::before
-			background-color: $orange1
+			background: $gradient
 		&:hover, &.Button--active
 			&::before
-				background-color: $orange1
+				background: $gradient
 	
 	
 .Button.Button--disabled.Button--icon

@@ -4,10 +4,16 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "dev": "nodemon src/index.js"
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
+  "engine": {
+		"node": "12.13.1",
+		"npm": "6.12.1"
+	},
   "keywords": [],
-  "author": "",
+  "author": "Alferov Dmitriy <alfie-web@ya.ru>",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.1",
