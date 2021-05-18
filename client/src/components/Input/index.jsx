@@ -15,6 +15,7 @@ export default function Input({
    placeholder,
    icon,
    title = '',
+   autoFocus = false
 }) {
    return (
       <div className={clsx('Input', className)} title={title}>
@@ -30,6 +31,7 @@ export default function Input({
             onFocus={onFocus}
             onBlur={onBlur}
             onKeyPress={onKeyPress}
+            autoFocus={autoFocus}
          />
 
          {icon && <div className="Input__icon">{icon}</div>}

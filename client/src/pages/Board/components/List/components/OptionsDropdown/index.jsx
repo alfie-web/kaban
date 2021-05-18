@@ -2,16 +2,15 @@ import { useState, memo } from 'react'
 import { useDispatch } from 'react-redux'
 import clsx from 'clsx'
 
-import { deleteList } from '../../../../../store/reducers/lists'
-import DropDown from '../../../../../components/DropDown'
+import { deleteList } from '../../../../../../store/reducers/lists'
+import DropDown from '../../../../../../components/DropDown'
 
-const ListOptionsDropDown = ({ _id }) => {
+const OptionsDropdown = ({ listId }) => {
    const dispatch = useDispatch()
    const [isVisible, setIsVisible] = useState(false)
 
    const onDeleteList = () => {
-      console.log('Delete', _id)
-      dispatch(deleteList(_id))
+      dispatch(deleteList(listId))
    }
 
    const onShow = () => setIsVisible(true)
@@ -48,4 +47,4 @@ const ListOptionsDropDown = ({ _id }) => {
    )
 }
 
-export default memo(ListOptionsDropDown)
+export default memo(OptionsDropdown)

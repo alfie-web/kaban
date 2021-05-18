@@ -8,6 +8,7 @@ import AuthPage from './pages/Auth'
 import BoardsPage from './pages/Boards'
 import BoardPage from './pages/Board'
 import Header from './components/Header'
+import Preloader from './components/Preloader'
 
 const ROUTES = [
    { path: '/', component: AuthPage },
@@ -44,7 +45,7 @@ const App = () => {
       dispatch(init())
    }, [dispatch])
       
-   if (!initialized) return <div>Loading...</div>
+   if (!initialized) return <Preloader />
 
    return <div className="App">
       <Header />

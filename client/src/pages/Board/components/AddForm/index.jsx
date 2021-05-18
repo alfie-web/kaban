@@ -1,25 +1,23 @@
 import { useState } from 'react'
 import clsx from 'clsx'
 
-import './AddForm.sass'
+import Textarea from '../../../../components/Textarea'
 
 export default function AddForm({ callback, className, placeholder }) {
    const [text, setText] = useState('')
 
-   const inputChangeHandler = (e) => {
-      setText(e.target.value)
-   }
+   const onChange = e => setText(e.target.value)
+   const onBlur = () => callback(text)
 
    return (
-      <div className={clsx('Add__form', className)}>
-         <textarea
-            name="text"
-            placeholder={placeholder}
+      <div className={clsx('List__addListForm', className)}>
+         <Textarea 
             value={text}
+            placeholder={placeholder}
             autoFocus
-            onChange={inputChangeHandler}
-            onBlur={() => callback(text)}
-         ></textarea>
+            onChange={onChange}
+            onBlur={onBlur}
+         />
       </div>
    )
 }

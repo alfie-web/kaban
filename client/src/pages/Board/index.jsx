@@ -1,49 +1,25 @@
-import { useRef, useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 
 import { fetchBoardById, moveList } from '../../store/reducers/boards'
-import { createList, moveCard, setEditedCard } from '../../store/reducers/lists'
+import { moveCard, setEditedCard } from '../../store/reducers/lists'
 
-import List from './components/List'
-import AddForm from './components/AddForm'
+import BoardLists from './components/Lists'
+import BoardBg from './components/Bg'
+import BoardTitle from './components/Title'
+import AddListForm from './components/AddListForm'
 import EditModal from './components/EditModal'
 import './Board.sass'
 
 const Board = () => {
 	const { id } = useParams()
 	const dispatch = useDispatch()
-	const listsRef = useRef(null)
-	const [newListMode, setNewListMode] = useState(false)
-	const { currentBoard } = useSelector(state => state.boards)
-	const { items } = useSelector(state => state.lists)
-
-   // console.log('RENDERS')
 
 	useEffect(() => {
 		id && dispatch(fetchBoardById(id))
 	}, [id, dispatch])
-
-	const scrollToRight = () => {
-		window.scrollTo({
-			left: listsRef.current.clientWidth,
-			behavior: 'smooth',
-		})
-	}
-
-	const onNewListMode = () => {
-		scrollToRight()
-		setNewListMode(true)
-	}
-
-	const onAddListHandler = (title) => {
-		setNewListMode(false)
-		if (!title.length) return
-
-		dispatch(createList(id, title))
-	}
-
 
 	const onDragEnd = (result) => {
       const { destination, source, draggableId, type } = result
@@ -86,16 +62,14 @@ const Board = () => {
 
 	return (
       <>
-         <div className="BoardPage__bg">
-            {currentBoard && <img src={currentBoard.bg} alt="Board bg" />}
-         </div>
+         <BoardBg />
 
          <main className="BoardPage page">
-            <h2 className="BoardPage__title">{currentBoard && currentBoard.title}</h2>
+            <BoardTitle />
             
             <div className="BoardPage__container">
                <DragDropContext onDragEnd={onDragEnd}>
-                  <div className="BoardPage__lists" ref={listsRef} onDoubleClick={cardClickHandler}>
+                  <div className="BoardPage__lists" onDoubleClick={cardClickHandler}>
                      <Droppable
                         droppableId="all-lists"
                         direction="horizontal"
@@ -107,34 +81,10 @@ const Board = () => {
                               ref={provided.innerRef}
                               className="BoardPage__lists-items"
                            >
-                              {items && items.length
-                                 ? items.map((list, index) => (
-                                    <List
-                                       key={list._id}
-                                       index={index}
-                                       className="BoardPage__list"
-                                       list={list}
-                                    />
-                                 ))
-                                 : null}
+                              <BoardLists />
                               {provided.placeholder}
 
-                              {!newListMode && (
-                                 <div
-                                    className="List__addListBtn"
-                                    onClick={onNewListMode}
-                                 >
-                                    + Добавить лист
-                                 </div>
-                              )}
-                              {newListMode && (
-                                 <div className="BoardPage__addList">
-                                    <AddForm
-                                       callback={onAddListHandler}
-                                       placeholder="Название листа"
-                                    />
-                                 </div>
-                              )}
+                              <AddListForm boardId={id} />
                            </div>
                         )}
                      </Droppable>
