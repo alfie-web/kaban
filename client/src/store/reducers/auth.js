@@ -55,10 +55,10 @@ export const login = (formData) => async (dispatch) => {
 
       await dispatch(getMe())
 
-      // window.flash('Вы успешно авторизованы!', 'success')
+      window.flash('Вы успешно авторизованы!', 'success')
 
    } catch (error) {
-      // window.flash(e.response.data.message, 'error')
+      window.flash(error.response.data.message, 'error')
       
    } finally {
       dispatch(setIsFetching(false))
