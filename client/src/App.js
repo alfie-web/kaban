@@ -10,17 +10,19 @@ import BoardPage from './pages/Board'
 import Header from './components/Header'
 
 const ROUTES = [
-   { path: '/', component: AuthPage, auth: 'all' },
+   { path: '/', component: AuthPage },
    { path: '/boards', component: BoardsPage, auth: true },
    { path: '/boards/:id', component: BoardPage, auth: true },
 ]
 
-function createRoutes(isAuth) {
+const Routes = ({ routes }) => {
+   const { isAuth } = useSelector(state => state.auth)
+
    return (
       <Switch>
-         {ROUTES.map(
+         {routes.map(
             (route, i) =>
-               (route.auth === isAuth || route.auth === 'all') && (
+               (route.auth === isAuth || !route.hasOwnProperty('auth')) && (
                   <Route
                      key={i}
                      exact
@@ -37,27 +39,19 @@ function createRoutes(isAuth) {
 const App = () => {
    const dispatch = useDispatch()
    const { initialized } = useSelector(state => state.app)
-   const { isAuth } = useSelector(state => state.auth)
-
+   
    useEffect(() => {
       dispatch(init())
    }, [dispatch])
-   // }, [initialized, dispatch])
       
    if (!initialized) return <div>Loading...</div>
 
    return <div className="App">
       <Header />
 
-      {createRoutes(isAuth)}
-
-      {/* <Switch>
-         
-
-         <Route exact path={['/signin', '/signup']} component={() => <div>Auth</div>} />
-         <Route exact path="/boards" component={() => <div>Boards</div>} />
-         <Redirect from="*" to="/" />
-      </Switch> */}
+      <Routes 
+         routes={ROUTES}
+      />
    </div>
 }
 

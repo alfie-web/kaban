@@ -40,7 +40,7 @@ const ListOptionsDropDown = ({ _id }) => {
          </div>
 
          <DropDown isVisible={isVisible} onClose={onClose} position="top">
-            <div className="List__dropdown-item" onClick={onDeleteList}>
+            <div className="List__dropdown-item Link" onClick={onDeleteList}>
                Удалить лист
             </div>
          </DropDown>

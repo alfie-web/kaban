@@ -1,15 +1,40 @@
-import React from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import logo from '../../assets/images/logo.svg'
+import { useSelector, useDispatch } from 'react-redux'
 
+import { logout } from '../../store/reducers/auth'
 import Avatar from '../Avatar'
+import DropDown from '../DropDown'
+import logo from '../../assets/images/logo.svg'
 
 import './Header.sass'
 
+const HeaderUser = () => {
+	const [isVisible, setIsVisible] = useState(false)
+	const dispatch = useDispatch()
+	const user = useSelector(state => state.auth.user)
+
+	const onShow = () => setIsVisible(true)
+	const onClose = () => setIsVisible(false)
+	const logoutHandler = () => dispatch(logout())
+
+	return user ? (
+      <div className="Header__user">
+			<div onClick={onShow}>
+         	<Avatar userName={user.fullname} url={user.avatar} />
+			</div>
+
+			<DropDown
+				isVisible={isVisible}
+				onClose={onClose}
+			>
+				<div className="Link" onClick={logoutHandler}>Выйти из аккаунта</div>
+			</DropDown>
+      </div>
+   ) : null
+}
+
 const Header = () => {
-	const { user } = useSelector(state => state.auth)
-	
 	return (
 		<header className="Header">
 			<div className="Header__left">
@@ -19,16 +44,7 @@ const Header = () => {
 			</div>
 
 			<div className="Header__right">
-				{user && <div className="header__user">
-					{/* <div className="header__user-name">{user.fullname}</div> */}
-					<Avatar 
-						userName={user.fullname}
-						url={user.avatar}
-					/>
-					{/* <div className="header__user-avatar">
-						{ user.avatar && <img src={ user.avatar } alt="Avatar"/> }
-					</div> */}
-				</div>}
+				<HeaderUser />
 			</div>
 		</header>
 	)
