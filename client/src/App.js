@@ -2,13 +2,18 @@ import { useEffect } from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
+import eventEmitter from './helpers/eventEmitter'
 import { init } from './store/reducers/app'
 
+import Flash from './components/Flash'
+import Header from './components/Header'
 import AuthPage from './pages/Auth'
 import BoardsPage from './pages/Boards'
 import BoardPage from './pages/Board'
-import Header from './components/Header'
 import Preloader from './components/Preloader'
+
+window.flash = (message, type = 'success', position = 'top-right') =>
+   eventEmitter.emit('flash', { message, type, position })
 
 const ROUTES = [
    { path: '/', component: AuthPage },
@@ -47,13 +52,19 @@ const App = () => {
       
    if (!initialized) return <Preloader />
 
-   return <div className="App">
-      <Header />
+   return (
+      <>
+         <Flash />
 
-      <Routes 
-         routes={ROUTES}
-      />
-   </div>
+         <div className="App">
+            <Header />
+
+            <Routes 
+               routes={ROUTES}
+            />
+         </div>
+      </>
+   )
 }
 
 export default App

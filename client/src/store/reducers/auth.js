@@ -58,7 +58,9 @@ export const login = (formData) => async (dispatch) => {
       window.flash('Вы успешно авторизованы!', 'success')
 
    } catch (error) {
+      console.log(error)
       window.flash(error.response.data.message, 'error')
+      // window.flash('Auth error', 'error')
       
    } finally {
       dispatch(setIsFetching(false))
