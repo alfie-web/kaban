@@ -23,11 +23,10 @@ export const authInstance = axios.create(axiosConfig) // для авториза
 instance.interceptors.request.use(
    async function (config) {
       const ATExpiresIn = localStorage.getItem('ATE')
-      const setverTimeOffset = localStorage.getItem('STO')
+      const serverTimeOffset = localStorage.getItem('STO')
 
-      // console.log('AXIOS_CONFIG', config)
       if (ATExpiresIn) {
-         if (Date.now() - setverTimeOffset >= +ATExpiresIn * 1000) {
+         if (Date.now() - serverTimeOffset >= +ATExpiresIn * 1000) {
             try {
                const { data } = await usersAPI.refreshTokens()
 

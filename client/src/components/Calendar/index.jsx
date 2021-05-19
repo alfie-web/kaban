@@ -240,7 +240,8 @@ const Calendar = ({
                                           date.month,
                                           date.year
                                        ),
-                                       'selected disabled': date.day === day && date.month + 1 === month && date.year === year,
+                                       'selected': date.day === day && date.month + 1 === month && date.year === year,
+                                       // 'selected disabled': date.day === day && date.month + 1 === month && date.year === year,
                                     })}
                                  >
                                     <span className="dayNumber">
