@@ -71,25 +71,14 @@
 			svg
 				fill: $orange1
 
-	&--disabled
-		pointer-events: none
-		user-select: none
-		&::before
-			background-color: $gray !important
-
-		svg
-			fill: $gray !important
-
-
-
-
+	
 	&--gray
 		color: white
 		&::before
-			background-color: $gray
+			background: $gray
 		&:hover, &.Button--active
 			&::before
-				background-color: $orange1
+				background: $orange1
 
 	&--blue
 		color: white
@@ -98,6 +87,15 @@
 		&:hover, &.Button--active
 			&::before
 				background: $gradient
+
+	&--disabled
+		pointer-events: none
+		user-select: none
+		&::before
+			background: $gray !important
+
+		svg
+			fill: $gray !important
 	
 	
 .Button.Button--disabled.Button--icon
