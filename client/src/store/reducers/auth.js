@@ -48,7 +48,6 @@ export const getMe = () => async (dispatch) => {
 export const login = (formData) => async (dispatch) => {
    dispatch(setIsFetching(true))
    try {
-      window.flash('Вы успешно авторизованы!', 'success')
       const { data } = await usersAPI.login(formData)
       
       localStorage.setItem('ATE', JSON.stringify(data.data.exp))
@@ -57,13 +56,9 @@ export const login = (formData) => async (dispatch) => {
       await dispatch(getMe())
 
       window.flash('Вы успешно авторизованы!', 'success')
-      // window.flash('Вы успешно авторизованы!', 'success')
 
    } catch (error) {
-      alert(error, 'Error auth')
-      console.log(error)
       window.flash(error.response.data.message, 'error')
-      // window.flash('Auth error', 'error')
       
    } finally {
       dispatch(setIsFetching(false))
