@@ -6,7 +6,6 @@ const usersAPI = {
    refreshTokens: () => authInstance.post('/users/refresh-tokens')
       .then(({ data }) => {
          localStorage.setItem('ATE', JSON.stringify(data.data.exp))
-         // TODO: А вообще, нужно учитывать то, что время у пользователя может отставать от серверного
          localStorage.setItem('STO', JSON.stringify(Date.now() - data.data.serverTime))
          api.defaults.headers.common['token'] = data.data.accessToken
 

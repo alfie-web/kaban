@@ -9,7 +9,10 @@ const DatePicker = ({ date, onChange }) => {
 	const parsedDate = date ? date.split('.') : [null, null, null]
 
 	const onDateSelect = ({ day, month, year }) => {
-		onChange({ prop: 'date', value: `${addZero(day)}.${addZero(month)}.${year}`})
+		const selectedDate = `${addZero(day)}.${addZero(month)}.${year}`
+		const newDate = date === selectedDate ? '' : selectedDate
+
+		onChange({ prop: 'date', value: newDate})
 		setCalendarVisible(false)
 	}
 
