@@ -1,15 +1,17 @@
 import { useState } from 'react'
 
-import addZero from '../../../../../../helpers/addZero'
 import TimePicker from '../../../../../../components/TimePicker'
 import DropDown from '../../../../../../components/DropDown'
 
 const Time = ({ time, onChange }) => {
 	const [isVisible, setIsVisible] = useState(false)
-	const parsedTime = time ? time.split(':') : [0, 0]
+	const parsedTime = time ? time.split(':') : [NaN, NaN]
+	// const parsedTime = time ? time.split(':') : [0, 0]
 
-	const onTimeSelect = ({ hours, minutes }) => {
-		onChange({ prop: 'time', value: `${addZero(hours)}:${addZero(minutes)}`})
+	const onTimeSelect = (newTime) => {
+		onChange({ prop: 'time', value: newTime})
+		// onChange({ prop: 'time', value: `${hours}:${minutes}`})
+		// onChange({ prop: 'time', value: `${addZero(hours)}:${addZero(minutes)}`})
 		setIsVisible(false)
 	}
 
