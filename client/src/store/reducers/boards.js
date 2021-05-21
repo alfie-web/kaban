@@ -44,13 +44,10 @@ export const fetchBoardById = (id) => async (dispatch, getState) => {
    const { boards } = getState()
 	dispatch(setIsFetching(true))
 
-   // if (!boards.currentBoard || boards.currentBoard._id !== id)
-
    try {
       if (!boards.currentBoard || boards.currentBoard._id !== id) {
          const { data } = await boardsAPI.getById(id)
          await dispatch(setCurrentBoard(data.data))
-         // тут же получать листы
          await dispatch(fetchLists(id))
       }
 

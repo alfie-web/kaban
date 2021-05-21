@@ -9,8 +9,6 @@ const Modal = ({
    isVisible = false,
    className,
 }) => {
-   // console.log('MODAL RENDERS')
-
    const barWidth = useRef(null)
    const overlayRef = useRef(null)
    const modalRef = useRef(null)
