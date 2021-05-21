@@ -1,9 +1,10 @@
+const createError = require('http-errors')
 const BoardModel = require('../models/Board')
 const ListModel = require('../models/List')
 const CardModel = require('../models/Card')
 
 module.exports = class List {
-   getAll = async (req, res) => {
+   getAll = async (req, res, next) => {
       const { boardId } = req.params
 
       try {
@@ -22,14 +23,11 @@ module.exports = class List {
          })
 
       } catch (e) {
-         res.status(400).json({
-            status: 'error',
-            e,
-         })
+         return next(createError(400, 'Самсинг вент ронг'))
       }
    }
 
-   getCards = async (req, res) => {
+   getCards = async (req, res, next) => {
       const listId = req.params.id
 
       const limit = 2
@@ -59,14 +57,11 @@ module.exports = class List {
          })
          
       } catch (error) {
-         res.status(400).json({
-            status: 'error',
-            message: error,
-         })
+         return next(createError(400, 'Самсинг вент ронг'))
       }
    }
 
-   create = async (req, res) => {
+   create = async (req, res, next) => {
       const postData = {
          boardId: req.body.boardId,
          title: req.body.title,
@@ -88,15 +83,12 @@ module.exports = class List {
          })
          
       } catch (error) {
-         res.status(400).json({
-            status: 'error',
-            message: error,
-         })
+         return next(createError(400, 'Самсинг вент ронг'))
       }
    }
 
    // TODO: Проверить имеет ли пользователь право на удаление
-   delete = async (req, res) => {
+   delete = async (req, res, next) => {
       const listId = req.params.id
 
       try {
@@ -117,14 +109,11 @@ module.exports = class List {
          })
          
       } catch (error) {
-         res.status(400).json({
-            status: 'error',
-            message: error,
-         })
+         return next(createError(400, 'Самсинг вент ронг'))
       }
    }
 
-   moveCard = async (req, res) => {
+   moveCard = async (req, res, next) => {
       const {
          startListId, // id листа из которого перемещаем карточку
          cardId, // id перемещаемой карточки
@@ -149,9 +138,9 @@ module.exports = class List {
     
                successMsg = 'moved inside the list'
                
+            } else {
+               return next(createError(400, 'Invalid data'))
             }
-   
-            // Тут кидаем ошибку в else
             
          } else {
             list.cards.splice(currentPosition, 1) 
@@ -183,11 +172,7 @@ module.exports = class List {
          })
    
       } catch (error) {
-         res.status(422).json({
-            status: 'error',
-            message: 'Invalid data',
-            err,
-         })
+         return next(createError(400, 'Invalid data'))
       }
    }
 }

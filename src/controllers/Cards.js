@@ -1,8 +1,9 @@
+const createError = require('http-errors')
 const ListModel = require('../models/List')
 const CardModel = require('../models/Card')
 
 module.exports = class Card {
-   create = async (req, res) => {
+   create = async (req, res, next) => {
       const postData = {
          listId: req.body.listId,
          title: req.body.title,
@@ -30,14 +31,11 @@ module.exports = class Card {
          })
          
       } catch (error) {
-         res.status(400).json({
-            status: 'error',
-            message: err,
-         })
+         return next(createError(400, 'Самсинг вент ронг'))
       }
    }
 
-   editCard = async (req, res) => {
+   editCard = async (req, res, next) => {
       const { cardId, prop, value } = req.body
 
       try {
@@ -49,21 +47,17 @@ module.exports = class Card {
          })
 
       } catch (error) {
-         res.status(404).json({
-            status: 'error',
-            message: 'Invalid card data provided',
-            err,
-         })
+         return next(createError(400, 'Invalid card data provided'))
       }
    }
 
-   deleteCard = async (req, res) => {
+   deleteCard = async (req, res, next) => {
       const { listId, cardId } = req.body
-      console.log('listId and cardId', req.body)
+
       try {
          const list = await ListModel.findById(listId)
 
-         if (!list.cards.includes(cardId)) throw 'Card not found'
+         if (!list.cards.includes(cardId)) return next(createError(404, 'Card not found'))
 
          await list.cards.pull(cardId)
          await list.save()
@@ -76,10 +70,7 @@ module.exports = class Card {
          })
 
       } catch (err) {
-         res.status(400).json({
-            status: 'error',
-            message: err,
-         })
+         return next(createError(400, 'Something went wrong'))
       }           
    }
 }

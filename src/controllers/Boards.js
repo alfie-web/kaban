@@ -1,7 +1,8 @@
+const createError = require('http-errors')
 const BoardModel = require('../models/Board')
 
 module.exports = class Boards {
-   getAll = async (req, res) => {
+   getAll = async (req, res, next) => {
       try {
          const boards = await BoardModel.find({ users: req.user._id })
 
@@ -11,14 +12,11 @@ module.exports = class Boards {
          })
          
       } catch (error) {
-         res.status(400).json({
-            status: 'error',
-            err,
-         })
+         return next(createError(400, 'Самсинг вент ронг'))
       }   
    }
 
-   getById = async (req, res) => {
+   getById = async (req, res, next) => {
       const boardId = req.params.id
       const userId = req.user._id
 
@@ -36,15 +34,11 @@ module.exports = class Boards {
          })
          
       } catch (error) {
-         res.status(404).json({
-            status: 'error',
-            message: 'Board not found',
-            err,
-         })
+         return next(createError(404, 'Board not found'))
       }
    }
 
-   create = async (req, res) => {
+   create = async (req, res, next) => {
       const userId = req.user._id
       const postData = {
          title: req.body.title,
@@ -63,15 +57,11 @@ module.exports = class Boards {
          })
          
       } catch (error) {
-         res.status(422).json({
-            status: 'error',
-            message: 'Invalid data',
-            err,
-         })
+         return next(createError(400, 'Invalid data'))
       }
    }
 
-   moveList = async (req, res) => {
+   moveList = async (req, res, next) => {
       const {
          boardId, 
          listId, 
@@ -97,11 +87,7 @@ module.exports = class Boards {
             })
          }
       } catch (error) {
-         res.status(404).json({
-            status: 'error',
-            message: 'Board not found',
-            err,
-         })
+         return next(createError(404, 'Board not found'))
       }
    }
 }
