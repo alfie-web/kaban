@@ -3,7 +3,6 @@ const ListModel = require('../models/List')
 const CardModel = require('../models/Card')
 
 module.exports = class List {
-  
    getAll = async (req, res) => {
       const { boardId } = req.params
 
@@ -11,8 +10,6 @@ module.exports = class List {
          const board = await BoardModel.findOne({ _id: boardId })
          const lists = await ListModel.find({ boardId }).select('-cards')
 
-         // Приходится сортировать, ибо падла не соблюдает порядок
-         // (эта штука сортирует массив в соответствии с другим такимже массивом)
          const sortedLists = lists.sort(function (a, b) {
             return (
                board.lists.indexOf(a._id) - board.lists.indexOf(b._id)
@@ -37,8 +34,6 @@ module.exports = class List {
 
       const limit = 2
       const offset = +req.query.offset || 0
-
-      console.log('offset', offset)
 
       try {
          const cardsCount = await CardModel.countDocuments({ listId })
@@ -104,7 +99,6 @@ module.exports = class List {
    delete = async (req, res) => {
       const listId = req.params.id
 
-      
       try {
          const list = await ListModel.findById(listId)
          list.cards.length && await CardModel.deleteMany({ _id: { $in: list.cards } })
@@ -130,7 +124,7 @@ module.exports = class List {
       }
    }
 
-   moveCard = (req, res) => {
+   moveCard = async (req, res) => {
       const {
          startListId, // id листа из которого перемещаем карточку
          cardId, // id перемещаемой карточки
@@ -138,80 +132,62 @@ module.exports = class List {
          currentPosition, // индекс текущей перемещаемой карточки
          newPosition, // индекс новой позиции в массиве
       } = req.body
+      let successMsg = ''
 
-      if (startListId === endListId) {
-         ListModel.findOne({ _id: startListId })
-            .exec()
-            .then((list) => {
-               if (list.cards.includes(cardId)) {
-                  list.cards.splice(
-                     newPosition,
-                     0,
-                     list.cards.splice(currentPosition, 1)[0]
-                  ) // На новой позиции ничего не вырезаем, но вставляем туда 1 элемент из текущей позиции
+      try {
+         const list = await ListModel.findOne({ _id: startListId })
 
-                  list
-                     .save()
-                     .then(() => {
-                        res.json({
-                           status: 'success',
-                           message: 'moved inside the list',
-                        })
-                     })
-                     .catch((err) =>
-                        res.status(422).json({
-                           status: 'error',
-                           message: 'Invalid data',
-                           err,
-                        })
-                     )
+         if (startListId === endListId) {
+            if (list.cards.includes(cardId)) {
+               list.cards.splice(
+                  newPosition,
+                  0,
+                  list.cards.splice(currentPosition, 1)[0]
+               ) // На новой позиции ничего не вырезаем, но вставляем туда 1 элемент из текущей позиции
+   
+               await list.save()
+    
+               successMsg = 'moved inside the list'
+               
+            }
+   
+            // Тут кидаем ошибку в else
+            
+         } else {
+            list.cards.splice(currentPosition, 1) 
+            await list.save()
+   
+            await CardModel.updateOne(
+               { _id: cardId },
+               { listId: endListId }
+            )
+               
+            await ListModel.updateOne(
+               { _id: endListId },
+               {
+                  $push: {
+                     cards: {
+                        $each: [cardId],
+                        $position: newPosition,
+                     },
+                  },
                }
-            })
-
-            .catch((err) =>
-               res.status(422).json({
-                  status: 'error',
-                  message: 'Invalid data',
-                  err,
-               })
             )
-      } else {
-         ListModel.findOne({ _id: startListId })
-            .exec()
-            .then((list) => {
-               list.cards.splice(currentPosition, 1) // Элегантный способ с $pull не получился хз почему
 
-               list.save().then(() => {
-                  CardModel.updateOne(
-                     { _id: cardId },
-                     { listId: endListId }
-                  ).then(() => {
-                     ListModel.updateOne(
-                        { _id: endListId },
-                        {
-                           $push: {
-                              cards: {
-                                 $each: [cardId],
-                                 $position: newPosition,
-                              },
-                           },
-                        }
-                     ).then(() => {
-                        res.json({
-                           status: 'success',
-                           message: 'moved to another list',
-                        })
-                     })
-                  })
-               })
-            })
-            .catch((err) =>
-               res.status(422).json({
-                  status: 'error',
-                  message: 'Invalid data',
-                  err,
-               })
-            )
+            successMsg = 'moved to another list'
+         }
+
+         res.json({
+            status: 'success',
+            message: successMsg,
+         })
+   
+      } catch (error) {
+         res.status(422).json({
+            status: 'error',
+            message: 'Invalid data',
+            err,
+         })
       }
    }
 }
