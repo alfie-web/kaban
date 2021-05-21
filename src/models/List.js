@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-// const mongoosePaginate = require('mongoose-paginate-v2')
 
 const ListSchema = new mongoose.Schema(
    {
@@ -20,14 +19,9 @@ const ListSchema = new mongoose.Schema(
          ],
          default: [],
       },
-      // cards: [{
-      // 	type: mongoose.Schema.Types.ObjectId,
-      // 	ref: 'Card'
-      // }]
    },
    {
       timestamps: true,
    }
 )
-// mySchema.plugin(mongoosePaginate)
 module.exports = mongoose.model('List', ListSchema)

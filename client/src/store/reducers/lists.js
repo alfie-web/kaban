@@ -110,6 +110,10 @@ export const {
 	setDeleteList
 } = listsSlice.actions
 
+
+
+
+
 export const fetchLists = (boardId) => async (dispatch) => {
 	dispatch(setIsFetching(true))
 

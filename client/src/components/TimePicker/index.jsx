@@ -29,9 +29,8 @@ function TimePicker({ hours, minutes, onTimeSelect }) {
 		scrollToTime(scrollContainer, number)
 	}
 
-	const onReset = () => {
-		onTimeSelect('')
-	}
+	const onReset = () => onTimeSelect('')
+
 	const onOk = () => {
 		const { hours, minutes } = selected
 		const newHours = Number.isNaN(hours) ? 0 : hours

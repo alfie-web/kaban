@@ -85,13 +85,13 @@ class UserController {
       }
    }
 
-   refreshTokens = (req, res, next) => {
+   refreshTokens = async (req, res, next) => {
       const secret = process.env.SECRET
       const refreshToken = req.cookies.auth
          ? JSON.parse(req.cookies.auth).refreshToken
          : ''
-
       let payload
+
       try {
          payload = jwt.verify(refreshToken, secret)
          if (payload.type !== 'refresh') {
@@ -105,38 +105,34 @@ class UserController {
          }
       }
 
-      // Как раз здесь происходит логика проверки, валиден ли refreshToken
-      TokenModel.findOne({ tokenId: payload.id })
-         .exec()
-         .then((token) => {
-            if (token === null) {
-               return next(createError(401, 'Невалидный токен'))
-            }
+      try {
+         const token = await TokenModel.findOne({ tokenId: payload.id })
 
-            return updateTokens(token.user)
-         })
-         .then((tokens) => {
-            res.cookie(
-               'auth',
-               JSON.stringify({ refreshToken: tokens.refreshToken }),
-               { maxAge: tokens.time, httpOnly: true }
-            )
+         if (token === null) return next(createError(401, 'Невалидный токен'))
 
-            res.json({
-               status: 'success',
-               data: {
-                  exp: tokens.exp,
-                  accessToken: tokens.accessToken,
-                  serverTime: Date.now()
-               },
-            })
-         })
-         .catch((err) =>
-            res.status(400).json({
-               status: 'error',
-               message: err.message,
-            })
+         const tokens = await updateTokens(token.user)
+
+         res.cookie(
+            'auth',
+            JSON.stringify({ refreshToken: tokens.refreshToken }),
+            { maxAge: tokens.time, httpOnly: true }
          )
+
+         res.json({
+            status: 'success',
+            data: {
+               exp: tokens.exp,
+               accessToken: tokens.accessToken,
+               serverTime: Date.now()
+            },
+         })
+         
+      } catch (error) {
+         res.status(400).json({
+            status: 'error',
+            message: err.message,
+         })
+      }
    }
 
    removeToken = async (req, res, next) => {

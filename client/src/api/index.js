@@ -30,7 +30,7 @@ instance.interceptors.request.use(
             try {
                const { data } = await usersAPI.refreshTokens()
 
-               config.headers.token = data.accessToken || ''   // я как понял эта херня сохраняет 1 раз, только для текущего http запроса
+               config.headers.token = data.accessToken || ''
 
             } catch (e) {
                console.log('e', e)

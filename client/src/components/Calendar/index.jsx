@@ -39,10 +39,7 @@ const Calendar = ({
       'Декабрь',
    ])
    const DAY_TITLES = useRef(['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'])
-
    const [selectedDate, setSelectedDate] = useState()
-
-   // console.log('RENDER')
 
    useEffect(() => {
       const today = new Date()
@@ -59,7 +56,6 @@ const Calendar = ({
       if (!target) return
 
       const { day, month, year } = target.dataset
-      // console.log({ day, month, year })
       onDaySelect({ day, month, year })
    }
 
@@ -90,7 +86,6 @@ const Calendar = ({
          }
       }
 
-      // console.log(prev)
       return {
          year,
          month: date.getMonth() - 1,
@@ -241,7 +236,6 @@ const Calendar = ({
                                           date.year
                                        ),
                                        'selected': date.day === day && date.month + 1 === month && date.year === year,
-                                       // 'selected disabled': date.day === day && date.month + 1 === month && date.year === year,
                                     })}
                                  >
                                     <span className="dayNumber">

@@ -30,13 +30,13 @@ module.exports = function createRoutes(app) {
 
    app.use(morgan('dev'))
 
-   app.use(function (req, res, next) {
-      if ('OPTIONS' == req.method) {
-         return res.sendStatus(200)
-      } else {
-         next()
-      }
-   })
+   // app.use(function (req, res, next) {
+   //    if ('OPTIONS' == req.method) {
+   //       return res.sendStatus(200)
+   //    } else {
+   //       next()
+   //    }
+   // })
 
    app.use('/api/users', userRoutes)
    app.use('/api/boards', boardsRoutes)
