@@ -6,9 +6,9 @@ import listsReducer from './reducers/lists'
 
 export default configureStore({
    reducer: {
-		app: appReducer,
-		auth: authReducer,
-		boards: boardsReducer,
-		lists: listsReducer,
-	},
+      app: appReducer,
+      auth: authReducer,
+      boards: boardsReducer,
+      lists: listsReducer,
+   },
 })

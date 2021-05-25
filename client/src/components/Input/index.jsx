@@ -15,7 +15,7 @@ export default function Input({
    placeholder,
    icon,
    title = '',
-   autoFocus = false
+   autoFocus = false,
 }) {
    return (
       <div className={clsx('Input', className)} title={title}>

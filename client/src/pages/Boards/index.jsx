@@ -7,21 +7,21 @@ import BoardList from './components/BoardList'
 import './Boards.sass'
 
 const Boards = () => {
-	const dispatch = useDispatch()
+   const dispatch = useDispatch()
 
-	useEffect(() => {
-		dispatch(fetchBoards())
-	}, [dispatch])
+   useEffect(() => {
+      dispatch(fetchBoards())
+   }, [dispatch])
 
-	return (
-		<main className="BoardsPage page">
-			<div className="container">
-				<h1>Ваши доски</h1>
+   return (
+      <main className="BoardsPage page">
+         <div className="container">
+            <h1>Ваши доски</h1>
 
-				<BoardList />
-			</div>
-		</main>
-	)
+            <BoardList />
+         </div>
+      </main>
+   )
 }
 
 export default Boards
