@@ -22,7 +22,7 @@ const AddCardForm = ({ listId }) => {
          {newCardMode && (
             <AddForm
                callback={addCardHandler}
-               placeholder="Название карточки"
+               placeholder="Текст карточки"
                className="List__addCardForm"
             />
          )}
