@@ -5,6 +5,7 @@ import { Draggable } from 'react-beautiful-dnd'
 import CardMarks from './components/Marks'
 import CardsDate from './components/Date'
 import CardDescription from './components/Description'
+import CardTodos from './components/Todos'
 import CardResponsibleUsers from './components/ResponsibleUsers'
 import CardTitle from './components/Title'
 
@@ -16,7 +17,7 @@ function Card({
    index,
    listId
 }) {
-   const { _id, title, marks, date, time, responsibleUsers, description } = card
+   const { _id, title, marks, date, time, responsibleUsers, description, todos } = card
 
    return (
       <Draggable draggableId={_id} index={index}>
@@ -38,8 +39,8 @@ function Card({
                <div className="Card__bottom">
                   <div className="Card__bottom-left">
                      <CardsDate date={date} time={time} />
-                     
                      <CardDescription description={description} />
+                     <CardTodos todos={todos} />
                   </div>
 
                   <div className="Card__bottom-right">

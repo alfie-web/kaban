@@ -102,6 +102,31 @@
 			&.selected
 				background-color: $light
 
+	&__todos
+		width: 100%
+
+		&-item, &-title
+			display: flex
+			align-items: center
+
+		&-title
+			svg
+				margin-left: 10px
+
+		&-items
+			margin-top: 10px
+
+		&-item
+			.Input
+				flex: 1
+				margin-left: 15px
+				input
+					cursor: pointer
+					border: none
+					padding: 5px 0
+					&:focus
+						cursor: text
+
 	&__delete
 		display: flex
 		justify-content: flex-end
