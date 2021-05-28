@@ -11,6 +11,14 @@
 		position: relative
 		flex: 1
 
+	&__selected-date
+		display: flex
+		align-items: center
+		margin-top: 10px
+
+		.Button
+			margin-right: 10px
+
 	&__title
 		margin-bottom: 5px
 
@@ -18,12 +26,13 @@
 		width: 100%
 
 	&__info
-		cursor: pointer
-
 		span
+			display: flex
+			// align-items: flex-end
 			svg
 				transform: translateY(3px)
-				margin-right: 10px
+				// margin-right: 10px
+
 
 	&__calendar
 		min-width: 340px
@@ -101,6 +110,40 @@
 
 			&.selected
 				background-color: $light
+
+	&__todos
+		width: 100%
+
+		&-item, &-title
+			display: flex
+			align-items: center
+
+		&-title
+			svg
+				margin-left: 10px
+
+		&-items
+			margin-top: 10px
+
+		&-item
+			.Input
+				flex: 1
+				margin: 0 15px
+				input
+					cursor: pointer
+					border: none
+					padding: 5px 0
+					&:focus
+						cursor: text
+			.Button
+				opacity: 0
+				transition: opacity .2s
+				padding: 10px
+
+			&:hover
+				.Button
+					opacity: 1
+
 
 	&__delete
 		display: flex

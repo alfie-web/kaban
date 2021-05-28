@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import eventEmitter from '../../helpers/eventEmitter'
 
 import './Flash.sass'
 
+// TODO: Сделать возможность показывать несколько алертов (хранить в массиве)
 const Flash = ({ time = 3000 }) => {
    let [visibility, setVisibility] = useState(false)
    let [message, setMessage] = useState('')
    let [type, setType] = useState('')
    let [position, setPosition] = useState('')
+   let timer = useRef()
 
    useEffect(() => {
       eventEmitter.addListener('flash', ({ message, type, position }) => {
@@ -15,19 +17,20 @@ const Flash = ({ time = 3000 }) => {
          setMessage(message)
          setType(type)
          setPosition(position)
-         setTimeout(() => {
+         timer.current = setTimeout(() => {
             setVisibility(false)
          }, time)
       })
    }, [time])
 
    const close = () => {
+      clearTimeout(timer.current)
       setVisibility(false)
    }
 
    return (
       visibility && (
-         <div className={`Flash Flash-${type} Flash--${position}`}>
+         <div className={`Flash Flash-${type} Flash--${position} fadeIn`}>
             <span className="Flash__closeBtn" onClick={close}>
                <svg
                   width="20"

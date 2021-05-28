@@ -25,6 +25,7 @@ const schema = new mongoose.Schema(
 		},
 		todos: {
 			type: [{
+				_id: String,
 				title: String,
 				completed: Boolean
 			}],

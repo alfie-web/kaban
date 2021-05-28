@@ -2,6 +2,7 @@ import clsx from 'clsx'
 import { useState } from 'react'
 
 import DropDown from '../../../../../../components/DropDown'
+import Button from '../../../../../../components/Button'
 
 const colors = ['FF1834', 'AA4FF2', '4F69F2', '65D30E', 'FF6107', 'FDCC20', 'FF5BAA', '26C3E5']
 
@@ -55,7 +56,7 @@ const Marks = ({ marks = [], onChange = () => {} }) => {
       <div className="EditModal__marks">
          <div
             className="EditModal__info"
-            onClick={() => setColorsVisible(!colorsVisible)}
+            // onClick={() => setColorsVisible(!colorsVisible)}
          >
             <h3 className="EditModal__title">Метки</h3>
 
@@ -64,9 +65,25 @@ const Marks = ({ marks = [], onChange = () => {} }) => {
                   <ColorBtn key={color} color={color} />
                ))}
 
-               <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-                 <path fillRule="evenodd" clipRule="evenodd" d="M9.5 0C10.0523 0 10.5 0.447715 10.5 1V8.5H18C18.5523 8.5 19 8.94771 19 9.5C19 10.0523 18.5523 10.5 18 10.5H10.5V18C10.5 18.5523 10.0523 19 9.5 19C8.94771 19 8.5 18.5523 8.5 18V10.5H1C0.447715 10.5 0 10.0523 0 9.5C0 8.94771 0.447715 8.5 1 8.5H8.5V1C8.5 0.447715 8.94771 0 9.5 0Z" fill="#8DA4B9"/>
-               </svg>
+               <Button
+                  onClick={() => setColorsVisible(!colorsVisible)}
+                  active={colorsVisible}
+                  icon={
+                     <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 19 19"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                     >
+                        <path
+                           fillRule="evenodd"
+                           clipRule="evenodd"
+                           d="M9.25 0C9.66421 0 10 0.335786 10 0.75V8.5H17.75C18.1642 8.5 18.5 8.83579 18.5 9.25C18.5 9.66421 18.1642 10 17.75 10H10V17.75C10 18.1642 9.66421 18.5 9.25 18.5C8.83579 18.5 8.5 18.1642 8.5 17.75V10H0.75C0.335786 10 0 9.66421 0 9.25C0 8.83579 0.335786 8.5 0.75 8.5H8.5V0.75C8.5 0.335786 8.83579 0 9.25 0Z"
+                        />
+                     </svg>
+                  }
+               />
             </div>
          </div>
 
@@ -76,14 +93,14 @@ const Marks = ({ marks = [], onChange = () => {} }) => {
             className="EditModal__dropdown ColorPicker"
          >
             {/* <div className="ColorPicker"> */}
-               {colors.map((color) => (
-                  <ColorBtn
-                     key={color}
-                     color={color}
-                     isSelected={value.includes(color)}
-							onClick={() => onSelect(color)}
-                  />
-               ))}
+            {colors.map((color) => (
+               <ColorBtn
+                  key={color}
+                  color={color}
+                  isSelected={value.includes(color)}
+                  onClick={() => onSelect(color)}
+               />
+            ))}
             {/* </div> */}
          </DropDown>
       </div>

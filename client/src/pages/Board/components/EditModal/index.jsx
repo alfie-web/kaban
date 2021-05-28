@@ -11,6 +11,7 @@ import DatePicker from './components/DatePicker'
 import TimePicker from './components/TimePicker'
 import Marks from './components/Marks'
 import ResponsibleUsers from './components/ResponsibleUsers'
+import Todos from './components/Todos'
 
 import './EditModal.sass'
 
@@ -64,6 +65,13 @@ const EditModal = () => {
                <DescriptionInput
                   description={editedCard.description}
                   onBlur={changeCard}
+               />
+            </div>
+
+            <div className="EditModal__row">
+               <Todos
+                  todos={editedCard.todos}
+                  onChange={changeCard}
                />
             </div>
 
