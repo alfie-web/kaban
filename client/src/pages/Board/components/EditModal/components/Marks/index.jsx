@@ -67,6 +67,7 @@ const Marks = ({ marks = [], onChange = () => {} }) => {
 
                <Button
                   onClick={() => setColorsVisible(!colorsVisible)}
+                  active={colorsVisible}
                   icon={
                      <svg
                         width="20"

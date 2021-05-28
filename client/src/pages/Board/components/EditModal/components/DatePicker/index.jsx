@@ -29,6 +29,7 @@ const DatePicker = ({ date, onChange }) => {
             <div className="EditModal__selected-date">
                <Button
                   onClick={() => setCalendarVisible(!calendarVisible)}
+                  active={calendarVisible}
                   icon={
                      <svg
                         width="20"

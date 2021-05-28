@@ -128,13 +128,22 @@
 		&-item
 			.Input
 				flex: 1
-				margin-left: 15px
+				margin: 0 15px
 				input
 					cursor: pointer
 					border: none
 					padding: 5px 0
 					&:focus
 						cursor: text
+			.Button
+				opacity: 0
+				transition: opacity .2s
+				padding: 10px
+
+			&:hover
+				.Button
+					opacity: 1
+
 
 	&__delete
 		display: flex

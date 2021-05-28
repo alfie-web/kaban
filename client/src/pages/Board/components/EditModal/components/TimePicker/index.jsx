@@ -28,6 +28,7 @@ const Time = ({ time, onChange }) => {
             <div className="EditModal__selected-date">
                <Button
                   onClick={() => setIsVisible(!isVisible)}
+                  active={isVisible}
                   icon={
                      <svg
                         width="20"

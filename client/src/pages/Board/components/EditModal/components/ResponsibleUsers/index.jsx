@@ -73,6 +73,7 @@ const ResponsibleUsers = ({ responsibleUsers = [], onChange = () => {} }) => {
 
                <Button
                   onClick={() => setUsersVisible(!usersVisible)}
+                  active={usersVisible}
                   icon={
                      <svg
                         width="20"
