@@ -6,7 +6,6 @@ const CardTodos = ({ todos }) => {
       () => todos.reduce((acc, cur) => cur.completed ? acc += 1 : acc, 0),
       [todos]
    )
-   console.log('completedTodos', completedTodos)
 
    return todos.length ? (
       <div 
